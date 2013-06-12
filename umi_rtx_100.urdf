@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<robot name="umi_rtx_100">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="1.252 0.132 0.091"/>
+      </geometry>
+      <origin rpy="0 -1.57 0" xyz="-0.0455 0 0.626"/>
+      <material name="blue">
+        <color rgba="0 0 .8 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="shoulder">
+    <visual>
+      <geometry>
+        <box size="0.278 0.132 0.091"/>
+      </geometry>
+      <origin rpy="0 -1.57 0" xyz="0 0 0"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="shoulder_updown" type="prismatic">
+    <parent link="base_link"/>
+    <child link="shoulder"/>
+    <origin xyz="0.0445 0 0.134"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="0.033" upper="0.948" effort="1" velocity="1"/>
+  </joint>
+
+  <link name="shoulder_to_elbow">
+    <visual>
+      <geometry>
+        <box size="0.252 0.10 0.10"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0.126 0 0"/>
+      <material name="white">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="shoulder" type="revolute">
+    <parent link="shoulder"/>
+    <child link="shoulder_to_elbow"/>
+    <origin xyz="-0.01 0 -0.09"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="1" velocity="1"/>
+  </joint>
+
+  <link name="elbow_to_wrist">
+    <visual>
+      <geometry>
+        <box size="0.252 0.10 0.07"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0.126 0 0"/>
+      <material name="white">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="elbow" type="revolute">
+    <parent link="shoulder_to_elbow"/>
+    <child link="elbow_to_wrist"/>
+    <origin xyz="0.252 0 -0.07"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="2.64" effort="1" velocity="1"/>
+  </joint>
+
+  <link name="wrist_to_gripper">
+    <visual>
+      <geometry>
+        <box size="0.075 0.10 0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="wrist_yaw" type="revolute">
+    <parent link="elbow_to_wrist"/>
+    <child link="wrist_to_gripper"/>
+    <origin xyz="0.252 0 -0.05"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.92" upper="1.92" effort="1" velocity="1"/>
+  </joint>
+
+
+  <link name="wrist_gearbox_roll">
+    <visual>
+      <geometry>
+        <box size="0.10 0.10 0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0.05 0 0"/>
+      <material name="transparent">
+        <color rgba="1 0 0 0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="wrist_roll" type="revolute">
+    <parent link="wrist_to_gripper"/>
+    <child link="wrist_gearbox_roll"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="-1 0 0"/>
+    <limit lower="-3.16" upper="2.3" effort="1" velocity="1"/>
+  </joint>
+
+  <link name="wrist_gearbox_pitch">
+    <visual>
+      <geometry>
+        <box size="0.10 0.10 0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0.05 0 0"/>
+      <material name="white">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+  
+  <joint name="wrist_pitch" type="revolute">
+    <parent link="wrist_gearbox_roll"/>
+    <child link="wrist_gearbox_pitch"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="0 -1 0"/>
+    <limit lower="-1.71" upper="0.07" effort="1" velocity="1"/>
+  </joint>
+
+</robot>
+
+
