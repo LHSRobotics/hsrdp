@@ -23,6 +23,7 @@ Run ```ros_core``` on your machine
 Then connect the arduino to the USB port and run
 ```rosrun rosserial_python serial_node.py /dev/ttyACM0```
 It should show something like:
+
 	[INFO] [WallTime: 1371999847.133541] ROS Serial Python Node
 	[INFO] [WallTime: 1371999847.149722] Connecting to /dev/ttyACM0 at 57600 baud
 	[INFO] [WallTime: 1371999850.217666] Note: publish buffer size is 280 bytes
