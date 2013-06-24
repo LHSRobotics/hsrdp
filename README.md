@@ -31,5 +31,11 @@ It should show something like:
 
 At this point the raw encoder readings should be published into ROS
 You can view them by running rqt_plot with:
-```rosrun rqt_plot rqt_plot /arm_encoders/data[0],/arm_encoders/data[1],/arm_encoders/data[2],/arm_encoders/data[3],/arm_encoders/data[4],/arm_encoders/data[5],/arm_encoders/data[6]```
+
+	rosrun rqt_plot rqt_plot /arm_encoders/data[0],/arm_encoders/data[1],/arm_encoders/data[2],/arm_encoders/data[3],/arm_encoders/data[4],/arm_encoders/data[5],/arm_encoders/data[6]
 This will plot the raw encoder values onto a plot at 5Hz by default.
+
+
+To tell the arduino the target positons of encoders on the commandline you can use the following:
+
+	rostopic pub arm_encoders_targets std_msgs/Int16MultiArray '{layout: {dim: [], data_offset:0}, data: [0, 0, 0, 0, 0, 0, -375]}
