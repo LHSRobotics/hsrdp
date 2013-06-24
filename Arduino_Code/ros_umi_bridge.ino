@@ -42,7 +42,7 @@ void targetsCb( const std_msgs::Int16MultiArray& target_msg){
 //Set up the ros node and publisher
 std_msgs::Int16MultiArray joints_msg;
 ros::Publisher pub_joints_state("arm_encoders", &joints_msg);
-ros::Subscriber<std_msgs::Int16MultiArray> sub("arm_encoders_targets", targetsCb );
+ros::Subscriber<std_msgs::Int16MultiArray> sub("arm_encoder_targets", targetsCb );
 
 ros::NodeHandle nh;
 

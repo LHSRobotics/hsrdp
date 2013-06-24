@@ -38,4 +38,4 @@ This will plot the raw encoder values onto a plot at 5Hz by default.
 
 To tell the arduino the target positons of encoders on the commandline you can use the following:
 
-	rostopic pub arm_encoders_targets std_msgs/Int16MultiArray '{layout: {dim: [], data_offset:0}, data: [0, 0, 0, 0, 0, 0, -375]}
+	rostopic pub arm_encoder_targets std_msgs/Int16MultiArray '{layout: {dim: [], data_offset:0}, data: [0, 0, 0, 0, 0, 0, -375]}
