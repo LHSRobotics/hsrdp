@@ -6,14 +6,9 @@
 #include "Encoder.h"
 #include "MotorController.h"
 
-//Set up the ros node and publisher
-std_msgs::Int16MultiArray joints_msg;
-ros::Publisher pub_joints_state("arm_encoders", &joints_msg);
-ros::NodeHandle nh;
-
 
 Encoder encoders[7] = {
-  Encoder(22,23),//gripper, not used yet as not enough interrupt pins, will need to think of something
+  Encoder(22,23),//gripper
   Encoder(24,25),//wrist1
   Encoder(26,27),//wrist2
   Encoder(28,29),//wrist yaw
@@ -23,7 +18,7 @@ Encoder encoders[7] = {
 };
 
 MotorController motors[7] = {
-  MotorController(2,3),//gripper, not used yet as not enough interrupt pins, will need to think of something
+  MotorController(2,3),//gripper
   MotorController(4,5),//wrist1
   MotorController(6,7),//wrist2
   MotorController(8,9),//wrist yaw
@@ -33,21 +28,36 @@ MotorController motors[7] = {
 };
 
 int positions[7];
-int targets[7] ={0,0,0,0,0,-375,0};
+int* targets;
 
 boolean led_on;
 int led = 13;
 long publisher_timer;
 
+//The callback function that receives listens to new postition targets
+void targetsCb( const std_msgs::Int16MultiArray& target_msg){
+  targets = target_msg.data;
+}
+
+//Set up the ros node and publisher
+std_msgs::Int16MultiArray joints_msg;
+ros::Publisher pub_joints_state("arm_encoders", &joints_msg);
+ros::Subscriber<std_msgs::Int16MultiArray> sub("arm_encoders_targets", targetsCb );
+
+ros::NodeHandle nh;
 
 void setup() {
   
-    //Set the init position to -3554 (RTX inside p19)
+    //Set the init position to -375 (ref RTX_Inside.pdf)
     encoders[6].setPosition(-375);  
-  
+    
+    int defaultTargets[] = {0,0,0,0,0,-375,0};
+    targets = defaultTargets;
     nh.initNode();
     nh.advertise(pub_joints_state);
+    nh.subscribe(sub);
   
+    //This is where we connect our encoders, corresponds to encoders[7]
     attachInterrupt(22, doEncoderGripper, CHANGE);
     attachInterrupt(24, doEncoderWrist1, CHANGE);
     attachInterrupt(26, doEncoderWrist2, CHANGE); 
@@ -66,7 +76,7 @@ void setup() {
 
 void loop(){
   if (millis() > publisher_timer) {
-    publisher_timer = millis() + 20; //publish at 50 hz second
+    publisher_timer = millis() + 20; //publish at 50 hz
       
       //Heartbeat
       if(led_on){
@@ -84,6 +94,7 @@ void loop(){
     nh.spinOnce();
 }
 
+//Updates the encoder values and drives the motors as necessary
 void processJoint(int8_t j)
 {
     encoders[j].update();
@@ -117,6 +128,7 @@ void doEncoderShoulder(){
 void doEncoderZ(){
     processJoint(6);
 }
+
 
 int* readEncoders(){
     #ifdef DEBUG
