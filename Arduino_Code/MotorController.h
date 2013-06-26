@@ -19,12 +19,14 @@ class MotorController {
 
 public:
 
-    // constructor : sets PWM pins as outputs
+    // constructor : sets PWM pins as outputs, 
+    // 3rd param changes the second pin to a direction pin, so that the PWM is only used on the first param pin
 
-    MotorController( int8_t PinA, int8_t PinB) : pin_a ( PinA), pin_b( PinB ) {
+    MotorController( int8_t PinA, int8_t PinB, boolean one_pwm = false) : pin_a ( PinA), pin_b( PinB ) {
         // set pin a and b to be output 
         pinMode(pin_a, OUTPUT); 
         pinMode(pin_b, OUTPUT); 
+        one_pwm_type = one_pwm;
     };
 
  
@@ -37,12 +39,25 @@ public:
        throttle = constrain(p, -254, 254);
        if(p > 0)
        {
+         if(one_pwm_type)
+         {
+           analogWrite(pin_a,throttle)
+           digitalWrite(pin_b, HIGH);
+         } else
+         {
           analogWrite(pin_b, 0);
           analogWrite(pin_a, throttle);
+         }
           
        }else if(p < 0){
+         if(one_pwm_type)
+         {
+           analogWrite(pin_a,throttle)
+           digitalWrite(pin_b, LOW);
+         }else{ 
           analogWrite(pin_b, abs(throttle));
           analogWrite(pin_a, 0);
+         }
        }else{
          analogWrite(pin_a, 0);
          analogWrite(pin_b, 0);
@@ -57,6 +72,8 @@ private:
     int8_t pin_a;
 
     int8_t pin_b;
+    
+    boolean one_pwm_type;
 };
 
 #endif // __MOTORCONTROLLER_H__

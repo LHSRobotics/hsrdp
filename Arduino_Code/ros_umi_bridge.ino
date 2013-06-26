@@ -1,4 +1,4 @@
-#define UMI_DEBUG 1 // toggle, uncomment line to enable
+//#define UMI_DEBUG 1 // toggle, uncomment line to enable
 #define NO_PORTB_PINCHANGES // to indicate that port b will not be used for pin change interrupts (faster)
 #define NO_PORTJ_PINCHANGES // to indicate that port J will not be used for pin change interrupts (faster)
 //#define NO_PORTK_PINCHANGES // to indicate that port d will not be used for pin change interrupts (faster)
@@ -28,7 +28,7 @@ MotorController motors[7] = {
   MotorController(6,7),//wrist2
   MotorController(8,9),//wrist yaw
   MotorController(10,11),//elbow
-  MotorController(12,12),//shoulder
+  MotorController(12,46),//shoulder
   MotorController(44,45)//Z-axis TODO(this is requires a custom motor controler to talk to the zaxis motor) 
 };
 
@@ -85,13 +85,25 @@ void setup() {
 void loop(){
   if (millis() > publisher_timer) {
     publisher_timer = millis() + 200; //publish at 5 hz
-      
-
-      joints_msg.data_length = 7;
-      joints_msg.data = readEncoders();
-      pub_joints_state.publish(&joints_msg);
-      
+    
+        //Heartbeat
+    if(led_on){
+     digitalWrite(led, HIGH);
+     led_on = 0;
+    }else{
+     digitalWrite(led, LOW);
+     led_on = 1;
     }
+    for(int i=0; i < 7; i++)
+    {
+       moveJoint(i);
+    }
+  
+    joints_msg.data_length = 7;
+    joints_msg.data = readEncoders();
+    pub_joints_state.publish(&joints_msg);
+      
+  }
     nh.spinOnce();
 }
 
@@ -99,7 +111,13 @@ void loop(){
 void processJoint(int8_t j)
 {
     encoders[j].update();
+    moveJoint(j);
+    
+}
+void moveJoint(int8_t j)
+{
     motors[j].setThrottle(encoders[j].getPosition()-targets[j]);
+   
 }
 
 void doEncoderGripper(){
@@ -123,18 +141,6 @@ void doEncoderElbow(){
 }
 
 void doEncoderShoulder(){
-    //Heartbeat
-    if(led_on){
-     digitalWrite(led, HIGH);
-     led_on = 0;
-    }else{
-     digitalWrite(led, LOW);
-     led_on = 1;
-    }
-  
-    #ifdef UMI_DEBUG
-    Serial << "Shoulder moved" << endl;
-    #endif
     processJoint(5);
 }
 
@@ -145,17 +151,17 @@ void doEncoderZ(){
 
 int* readEncoders(){
     #ifdef UMI_DEBUG
-    //Serial << "encoder readings: ";
+    Serial << "encoder readings: ";
     #endif
     for(int i=0; i < 7; i++)
     {
        positions[i] = encoders[i].getPosition();
        #ifdef UMI_DEBUG
-       //Serial << i << ":" << encoders[0].getPosition() << " ";
+       Serial << i << ":" << encoders[0].getPosition() << " ";
        #endif
     }
        #ifdef UMI_DEBUG
-       //Serial << endl;
+       Serial << endl;
        #endif
     return positions;
 }

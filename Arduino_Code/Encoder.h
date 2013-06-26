@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 
+
 class Encoder {
   /*  
     wraps encoder setup and update functions in a class
@@ -36,8 +37,9 @@ public:
     void update () {
         if (digitalRead(pin_a)) digitalRead(pin_b) ? position++ : position--;
         else digitalRead(pin_b) ? position-- : position++;
+        
     };
-
+       
     // returns current position
 
     int getPosition () { return position; };
