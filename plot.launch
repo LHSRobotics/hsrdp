@@ -1,0 +1,13 @@
+<launch>
+
+	<arg name="shoulder_updown" default="-375" />
+	<arg name="shoulder" default="0" />
+	<arg name="elbow" default="0" />
+	<arg name="wrist_yaw" default="0" />
+	<arg name="wrist_2" default="0" />
+	<arg name="wrist_1" default="0" />
+	<arg name="gripper" default="0" />	
+
+   	<node pkg="rqt_plot" type="rqt_plot" name="$(anon arm_encoders)"
+        	args="/arm_encoders/data[0],/arm_encoders/data[1],/arm_encoders/data[2],/arm_encoders/data[3],/arm_encoders/data[4],/arm_encoders/data[5],/arm_encoders/data[6]" output="screen" />
+</launch>

@@ -1,0 +1,13 @@
+<launch>
+
+	<arg name="shoulder_updown" default="-375" />
+	<arg name="shoulder" default="0" />
+	<arg name="elbow" default="0" />
+	<arg name="wrist_yaw" default="0" />
+	<arg name="wrist_2" default="0" />
+	<arg name="wrist_1" default="0" />
+	<arg name="gripper" default="0" />	
+
+   	<node pkg="rostopic" type="rostopic" name="$(anon arm_encoder_targets)"
+        	args="pub arm_encoder_targets std_msgs/Int16MultiArray '{layout: { dim: [], data_offset: 0 }, data: [$(arg gripper), $(arg wrist_1), $(arg wrist_2), $(arg wrist_yaw), $(arg elbow),  $(arg shoulder), $(arg shoulder_updown)]}'" output="screen" />
+</launch>
