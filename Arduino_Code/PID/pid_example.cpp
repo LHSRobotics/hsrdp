@@ -31,16 +31,18 @@ int16_t referenceValue, measurementValue, inputValue;
  *
  * Specify the desired PID sample time interval
  * With a 8-bit counter (255 cylces to overflow), the time interval value is calculated as follows:
- * TIME_INTERVAL = ( desired interval [sec] ) * ( frequency [Hz] ) / 255
- */
+ * TIME_INTERVAL = ( desired interval [sec] ) * ( frequency [Hz]/64 ) / 2*255
+ * In default arduino phase-correct pwm mode the TOV is triggerd only at bottom so double the cycle
+ * default arduino setup in wiring.c is prescaler=64
+ */TODO: check why 1000 gives 1.5 second interval, expect much longer
 //! \xrefitem todo "Todo" "Todo list"
-#define TIME_INTERVAL   157
+#define TIME_INTERVAL   1000
 
 /*! \brief Timer interrupt to control the sampling interval
  */
 ISR(TIMER1_OVF_vect)
 {
-  TCNT1 = 34286;
+  
   static uint16_t i = 0;
   if(i < TIME_INTERVAL)
     i++;
@@ -60,7 +62,6 @@ void Init(void)
  Serial.println("starting");
   pid_Init(K_P * SCALING_FACTOR, K_I * SCALING_FACTOR , K_D * SCALING_FACTOR , &pidData);
 
-  //TODO:Use timer2 and configure it so not to interfere with PWM
 
 //From atmel:
 //  // Set up timer, enable timer/counte 0 overflow interrupt
@@ -69,11 +70,6 @@ void Init(void)
 //  TCNT2 = 0;
   // From:
   noInterrupts();           // disable all interrupts
-  TCCR1A = 0;
-  TCCR1B = 0;
-
-  TCNT1 = 34286;            // preload timer 65536-16MHz/256/2Hz
-  TCCR1B |= (1 << CS12);    // 256 prescaler
   TIMSK1 |= (1 << TOIE1);   // enable timer overflow interrupt
   interrupts();
 }
