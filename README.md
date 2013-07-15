@@ -10,6 +10,9 @@ A robotics project aiming to build a robotic platform for hackers to play around
 
 Based on ROS (groovy), please reffer to http://www.ros.org/wiki/ROS/Installation for installation instructions.
 
+Assuming you've installed ROS following the guidelines on the website linked above you need to make sure the environment variables are setup correctly, as such run ```source ~/catkin_ws/devel/setup.bash``` after ```catkin_make``` in the catkin_ws directory
+
+
 URDF visualisation
 ------------------
 
@@ -19,9 +22,12 @@ run with
 
 ROS - Arduino bridge
 --------------------
+Running roscore will save the time as the launch files won't have to keep bringing it up and down at the time. I prefer to run it in a screen session for this purpose
+
 Run ```ros_core``` on your machine
+
 Then connect the arduino to the USB port and run
-```rosrun rosserial_python serial_node.py /dev/ttyACM0```
+```rosrun rosserial_python serial_node.py /dev/ttyACM0``` changing the last parammeter depending on which TTY port your aruduno serial is connected to.
 It should show something like:
 
 	[INFO] [WallTime: 1371999847.133541] ROS Serial Python Node
