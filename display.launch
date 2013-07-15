@@ -3,5 +3,6 @@
 <param name="robot_description" textfile="umi_rtx_100.urdf" />
 <param name="use_gui" value="$(arg gui)"/>
 <node name="umi_bridge" pkg="umi_rtx_100" type="umi_bridge" ></node>
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
 <node name="rviz" pkg="rviz" type="rviz" args="-d $(find umi_rtx_100)/src/urdf.rviz" />
 </launch>

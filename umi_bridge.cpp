@@ -18,22 +18,32 @@ void encoderProcess(const std_msgs::Int16MultiArray& msg)
 	
 	   //update joint_state
       joint_state.header.stamp = ros::Time::now();
-      joint_state.name.resize(8);
-      joint_state.position.resize(8);
+      joint_state.name.resize(7);
+      joint_state.position.resize(7);
+      
       joint_state.name[0] ="shoulder";
-      joint_state.position[0] = msg.data[5];
+      joint_state.position[0] = float(msg.data[5]) * 0.000597252;
+      
+      //0.001294162
       joint_state.name[1] ="wrist_pitch";
-      joint_state.position[1] = msg.data[1];
+      joint_state.position[1] = 
+		((float(msg.data[1]) + float(msg.data[2])) * 0.001294162 ) / 2; 
+      
       joint_state.name[2] ="wrist_roll";
-      joint_state.position[2] = msg.data[2];
+	  joint_state.position[2] = 
+		((float(msg.data[1]) - float(msg.data[2])) * 0.001294162 ) / 2; 
+      
       joint_state.name[3] ="shoulder_updown";
-      joint_state.position[4] = msg.data[6] ;
+      joint_state.position[3] = float(msg.data[6]) * 0.2667;
+      
       joint_state.name[4] ="elbow";
-      joint_state.position[4] = msg.data[4];
+      joint_state.position[4] = float(msg.data[4]) * 0.001194503;
+      
       joint_state.name[5] ="wrist_yaw";
-      joint_state.position[6] = msg.data[3];
-	  joint_state.name[7] ="gripper";
-      joint_state.position[7] = msg.data[0];
+      joint_state.position[5] = float(msg.data[5]) * 0.00179193;
+	  
+	  joint_state.name[6] ="gripper";
+      joint_state.position[6] = msg.data[0];
       
       is_state_to_publish = true;
 }
