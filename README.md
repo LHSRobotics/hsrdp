@@ -18,7 +18,7 @@ URDF visualisation
 
 Once installed pull the repository into your catkin workspace (e.g. ```~/catkin_ws/src/umi_rtx_100/src```) then 
 run with
-```roslaunch display.launch model:=umi_rtx_100.urdf gui:=true```
+```roslaunch simulate.launch model:=umi_rtx_100.urdf gui:=true```
 
 ROS - Arduino bridge
 --------------------
