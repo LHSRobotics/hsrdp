@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(HSRDP)
+project(umirtx100)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs)
+find_package(catkin REQUIRED COMPONENTS tf roscpp rospy std_msgs)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -34,10 +34,10 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   std_msgs
+ )
 
 ###################################
 ## catkin specific configuration ##
@@ -50,9 +50,10 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES HSRDP
+#  LIBRARIES umirtx100
 #  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
+CATKIN_DEPENDS tf
 )
 
 ###########
@@ -72,7 +73,7 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-# add_executable(HSRDP_node src/HSRDP_node.cpp)
+#add_executable(umirtx100_node src/umi_bridge.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -130,3 +131,8 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+include_directories(include ${catkin_INCLUDE_DIRS})
+
+add_executable(umi_bridge src/umi_bridge.cpp)
+target_link_libraries(umi_bridge ${catkin_LIBRARIES})
