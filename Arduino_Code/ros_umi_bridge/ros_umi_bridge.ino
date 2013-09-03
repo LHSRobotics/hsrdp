@@ -29,7 +29,7 @@ MotorController motors[7] = {
   MotorController(8,9),//wrist yaw
   MotorController(10,11),//elbow
   MotorController(12,46),//shoulder
-  MotorController(44,45)//Z-axis TODO(this is requires a custom motor controler to talk to the zaxis motor) 
+  MotorController(44,45, true)//Z-axis TODO(this is requires a custom motor controler to talk to the zaxis motor) 
 };
 
 int positions[7];
