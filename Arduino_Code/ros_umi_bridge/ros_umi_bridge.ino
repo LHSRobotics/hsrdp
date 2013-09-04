@@ -1,3 +1,10 @@
+/*  Custom UMI RTX 100 controller (part of the HSRDP project http://hack.rs/p/HSRDP)
+ *  Author: @mentarus
+ *  Last updated: 04 September 2013 
+ *  Prereqs: Built ROS arudino libs as per http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup
+ */
+
+
 //#define UMI_DEBUG 1 // toggle, uncomment line to enable
 #define NO_PORTB_PINCHANGES // to indicate that port b will not be used for pin change interrupts (faster)
 #define NO_PORTJ_PINCHANGES // to indicate that port J will not be used for pin change interrupts (faster)

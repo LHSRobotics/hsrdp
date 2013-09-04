@@ -41,7 +41,7 @@ public:
        {
          if(one_pwm_type)
          {
-           analogWrite(pin_a,throttle)
+           analogWrite(pin_a,throttle);
            digitalWrite(pin_b, HIGH);
          } else
          {
@@ -52,7 +52,7 @@ public:
        }else if(p < 0){
          if(one_pwm_type)
          {
-           analogWrite(pin_a,throttle)
+           analogWrite(pin_a,throttle);
            digitalWrite(pin_b, LOW);
          }else{ 
           analogWrite(pin_b, abs(throttle));
