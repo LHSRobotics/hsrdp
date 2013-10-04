@@ -35,9 +35,9 @@ public:
     int getThrottle () { return throttle; };
 
     // set the position value
-    void setThrottle ( const int p) {
-       throttle = constrain(p, -254, 254);
-       if(p > 0)
+    void setThrottle ( const int throttle_raw) {
+       throttle = constrain(throttle_raw, -254, 254);
+       if(throttle_raw > 0)
        {
          if(one_pwm_type)
          {
@@ -49,7 +49,7 @@ public:
           analogWrite(pin_a, throttle);
          }
           
-       }else if(p < 0){
+       }else if(throttle_raw < 0){
          if(one_pwm_type)
          {
            analogWrite(pin_a,throttle);

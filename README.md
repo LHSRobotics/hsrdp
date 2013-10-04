@@ -34,14 +34,20 @@ It should show something like:
 	[INFO] [WallTime: 1371999847.149722] Connecting to /dev/ttyACM0 at 57600 baud
 	[INFO] [WallTime: 1371999850.217666] Note: publish buffer size is 280 bytes
 	[INFO] [WallTime: 1371999850.218283] Setup publisher on arm_encoders [std_msgs/Int16MultiArray]
+If instead you are getting out of sync errors then this try running the serial monitor on the port in the Arduino IDE, TODO still need to find out why this happens
+If you are getting failed packet headers then it's most likely due to an arduino/ros version mismatch so make sure the right version of rosserial_python is installed and sourced.
 
 At this point the raw encoder readings should be published into ROS
 You can view them by running rqt_plot with:
 
 	rosrun rqt_plot rqt_plot /arm_encoders/data[0],/arm_encoders/data[1],/arm_encoders/data[2],/arm_encoders/data[3],/arm_encoders/data[4],/arm_encoders/data[5],/arm_encoders/data[6]
-This will plot the raw encoder values onto a plot at 5Hz by default.
+This will plot the raw encoder values onto a plot at 5Hz by default, you can also use roslaunch with ```roslaunch plot.launch```
 
 
 To tell the arduino the target positons of encoders on the commandline you can use the following:
 
-	rostopic pub arm_encoder_targets std_msgs/Int16MultiArray '{layout: {dim: [], data_offset:0}, data: [0, 0, 0, 0, 0, 0, -375]}
+	rostopic pub arm_encoder_targets std_msgs/Int16MultiArray '{layout: {dim: [], data_offset: 0}, data: [0, 0, 0, 0, 0, 0, -375]}'
+
+Or alternatively moving specific joints (the rest default to their init value) using roslaunch, with j1 being the up/down joint and j7 being the gripper
+	
+	roslaunch move.launch j1:=1000

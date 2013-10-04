@@ -36,7 +36,7 @@ MotorController motors[7] = {
   MotorController(8,9),//wrist yaw
   MotorController(10,11),//elbow
   MotorController(12,46),//shoulder
-  MotorController(44,45, true)//Z-axis TODO(this is requires a custom motor controler to talk to the zaxis motor) 
+  MotorController(44,45, true)//Z-axis, this is requires a PWM + direction(digital) control
 };
 
 int positions[7];
@@ -123,6 +123,7 @@ void processJoint(int8_t j)
 }
 void moveJoint(int8_t j)
 {
+    //Really basic control here, TODO use PID controller
     motors[j].setThrottle(encoders[j].getPosition()-targets[j]);
    
 }
