@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>umirtx100</name>
+  <name>hsrdp</name>
   <version>0.0.1</version>
   <description>A custom UMI RTX 100 robot arm controller package </description>
 

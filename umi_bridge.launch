@@ -1,5 +1,5 @@
 <launch>
-        <param name="robot_description" command="cat $(find umi_rtx_100)/umi_rtx_100.urdf" />
+        <param name="robot_description" command="cat $(find hsrdp)/umi_rtx_100.urdf" />
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
-        <node name="umi_bridge" pkg="umi_rtx_100" type="state_publisher" />
+        <node name="umi_bridge" pkg="hsrdp" type="state_publisher" />
 </launch>

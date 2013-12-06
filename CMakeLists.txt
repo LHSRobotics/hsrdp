@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(umirtx100)
+project(hsrdp)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -50,7 +50,7 @@ find_package(catkin REQUIRED COMPONENTS tf roscpp rospy std_msgs)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES umirtx100
+#  LIBRARIES HSRDP
 #  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
 CATKIN_DEPENDS tf
@@ -73,7 +73,7 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-#add_executable(umirtx100_node src/umi_bridge.cpp)
+#add_executable(hsrdp_node src/umi_bridge.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes

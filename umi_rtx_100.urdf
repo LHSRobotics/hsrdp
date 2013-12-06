@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="umi_rtx_100">
+<robot name="HSRDP">
   <link name="base_link">
     <visual>
       <geometry>
