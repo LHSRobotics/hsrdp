@@ -92,28 +92,25 @@
     <limit lower="-1.92" upper="1.92" effort="1" velocity="1"/>
   </joint>
 
-
-  <link name="wrist_gearbox_roll">
-    <visual>
-      <geometry>
-        <box size="0.10 0.10 0.05"/>
-      </geometry>
-      <origin rpy="0 0 0" xyz="0.05 0 0"/>
-      <material name="transparent">
-        <color rgba="1 0 0 0"/>
-      </material>
-    </visual>
-  </link>
-
-  <joint name="wrist_roll" type="revolute">
+  <joint name="gripper_roll" type="revolute">
     <parent link="wrist_to_gripper"/>
-    <child link="wrist_gearbox_roll"/>
+    <child link="virtual_link"/>
     <origin xyz="0 0 0"/>
     <axis xyz="-1 0 0"/>
     <limit lower="-3.16" upper="2.3" effort="1" velocity="1"/>
   </joint>
 
-  <link name="wrist_gearbox_pitch">
+  <link name="virtual_link"/>
+
+  <joint name="gripper_pitch" type="revolute">
+    <parent link="virtual_link"/>
+    <child link="wrist"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="0 -1 0"/>
+    <limit lower="-1.71" upper="0.07" effort="1" velocity="1"/>
+  </joint>
+
+  <link name="wrist">
     <visual>
       <geometry>
         <box size="0.10 0.10 0.05"/>
@@ -124,15 +121,21 @@
       </material>
     </visual>
   </link>
-  
-  <joint name="wrist_pitch" type="revolute">
-    <parent link="wrist_gearbox_roll"/>
-    <child link="wrist_gearbox_pitch"/>
+
+  <joint name="wrist_gripper_connection" type="fixed">
+    <parent link="wrist"/>
+    <child link="gripper"/>
     <origin xyz="0 0 0"/>
-    <axis xyz="0 -1 0"/>
-    <limit lower="-1.71" upper="0.07" effort="1" velocity="1"/>
   </joint>
 
+  <link name="gripper">
+    <visual>
+      <geometry>
+        <mesh filename="package://moveit_hsrdp/meshes/l_finger.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  
 </robot>
 
 
