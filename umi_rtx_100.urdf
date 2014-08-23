@@ -72,7 +72,7 @@
     <limit lower="-3.14" upper="2.64" effort="1" velocity="1"/>
   </joint>
 
-  <link name="wrist_to_gripper">
+  <link name="wrist_gripper_connection_to_gripper">
     <visual>
       <geometry>
         <box size="0.075 0.10 0.05"/>
@@ -84,16 +84,16 @@
     </visual>
   </link>
 
-  <joint name="wrist_yaw" type="revolute">
+  <joint name="wrist" type="revolute">
     <parent link="elbow_to_wrist"/>
-    <child link="wrist_to_gripper"/>
+    <child link="wrist_to_wrist_gripper_connection"/>
     <origin xyz="0.252 0 -0.05"/>
     <axis xyz="0 0 1"/>
     <limit lower="-1.92" upper="1.92" effort="1" velocity="1"/>
   </joint>
 
-  <joint name="gripper_roll" type="revolute">
-    <parent link="wrist_to_gripper"/>
+  <joint name="wrist_gripper_connection_roll" type="revolute">
+    <parent link="wrist_to_wrist_gripper_connection"/>
     <child link="virtual_link"/>
     <origin xyz="0 0 0"/>
     <axis xyz="-1 0 0"/>
@@ -102,15 +102,15 @@
 
   <link name="virtual_link"/>
 
-  <joint name="gripper_pitch" type="revolute">
+  <joint name="wrist_gripper_connection_pitch" type="revolute">
     <parent link="virtual_link"/>
-    <child link="wrist"/>
+    <child link="wrist_gripper_connection_to_gripper"/>
     <origin xyz="0 0 0"/>
     <axis xyz="0 -1 0"/>
     <limit lower="-1.71" upper="0.07" effort="1" velocity="1"/>
   </joint>
 
-  <link name="wrist">
+  <link name="wrist_to_wrist_gripper_connection">
     <visual>
       <geometry>
         <box size="0.10 0.10 0.05"/>
@@ -123,7 +123,7 @@
   </link>
 
   <joint name="wrist_gripper_connection" type="fixed">
-    <parent link="wrist"/>
+    <parent link="wrist_gripper_connection_to_gripper"/>
     <child link="gripper"/>
     <origin xyz="0 0 0"/>
   </joint>
@@ -131,8 +131,12 @@
   <link name="gripper">
     <visual>
       <geometry>
-        <mesh filename="package://moveit_hsrdp/meshes/l_finger.dae"/>
+        <box size="0.10 0.10 0.02"/>
       </geometry>
+      <origin rpy="0 0 0" xyz="0.05 0 0"/>
+      <material name="white">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
     </visual>
   </link>
   
