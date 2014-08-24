@@ -21,26 +21,26 @@ void encoderProcess(const std_msgs::Int16MultiArray& msg)
       joint_state.name.resize(7);
       joint_state.position.resize(7);
       
-      joint_state.name[0] ="shoulder";
-      joint_state.position[0] = float(msg.data[5]) * 0.000597252;
+      joint_state.name[0] ="shoulder_joint";
+      joint_state.position[0] = float(msg.data[5]) * -0.000597252;
       
       //0.001294162
-      joint_state.name[1] ="wrist_pitch";
+      joint_state.name[1] ="wrist_gripper_connection_pitch";
       joint_state.position[1] = 
-		((float(msg.data[1]) + float(msg.data[2])) * 0.001294162 ) / 2; 
+		0-((((float(msg.data[1]) + float(msg.data[2])) * 0.001294162 ) / 2)); 
       
-      joint_state.name[2] ="wrist_roll";
+      joint_state.name[2] ="wrist_gripper_connection_roll";
 	  joint_state.position[2] = 
 		((float(msg.data[1]) - float(msg.data[2])) * 0.001294162 ) / 2; 
       
       joint_state.name[3] ="shoulder_updown";
-      joint_state.position[3] = float(msg.data[6]) * 0.2667;
+      joint_state.position[3] = float(msg.data[6]) * -0.0002667;
       
       joint_state.name[4] ="elbow";
       joint_state.position[4] = float(msg.data[4]) * 0.001194503;
       
-      joint_state.name[5] ="wrist_yaw";
-      joint_state.position[5] = float(msg.data[5]) * 0.00179193;
+      joint_state.name[5] ="wrist";
+      joint_state.position[5] = float(msg.data[3]) * 0.00179193;
 	  
 	  joint_state.name[6] ="gripper";
       joint_state.position[6] = msg.data[0];

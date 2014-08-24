@@ -1,9 +1,10 @@
 <launch>
-<arg name="model" />
-<arg name="gui" default="False" />
-<param name="robot_description" textfile="$(arg model)" />
-<param name="use_gui" value="$(arg gui)"/>
-<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
-<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
-<node name="rviz" pkg="rviz" type="rviz" args="-d $(find hsrdp)/src/urdf.rviz" />
+	<arg name="model" default="$(find hsrdp)umi_rtx_100.urdf" />
+	<arg name="gui" default="False" />
+	<param name="robot_description" textfile="$(arg model)" />
+	<param name="use_gui" value="$(arg gui)"/>
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
+	<!--<node name="umi_bridge" pkg="hsrdp" type="umi_bridge" />-->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find hsrdp)/src/urdf.rviz" />
 </launch>
