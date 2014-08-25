@@ -39,8 +39,15 @@ void encoderProcess(const std_msgs::Int16MultiArray& msg)
       joint_state.name[4] ="elbow";
       joint_state.position[4] = float(msg.data[4]) * 0.001194503;
       
+      /*
+      
+      
+      
+      
+      */
+
       joint_state.name[5] ="wrist";
-      joint_state.position[5] = float(msg.data[3]) * 0.00179193;
+      joint_state.position[5] = float(msg.data[3]) * -0.00179193;
 	  
 	  joint_state.name[6] ="gripper";
       joint_state.position[6] = msg.data[0];
