@@ -21,25 +21,62 @@ public:
     std::vector<short> temp(size);
     std_msgs::Int16MultiArray encoder_targets;// = {layout: {dim: [], data_offset: 0}, data: [0, 0, 0, 0, 0, 0, -375]};
     ROS_INFO("1");
-    trajectory_msgs::JointTrajectoryPoint point = input.result.planned_trajectory.joint_trajectory.points[1];
-    ROS_INFO("2");
-    
+    int waypointCount = input.result.planned_trajectory.joint_trajectory.points.size();
+    ROS_INFO("Waypoint Count: %d", waypointCount);
     ros::Publisher arm_targets_pub;
-    
-    ROS_INFO("TARGET LOAD START");
-   /* encoder_targets.data[0] = (short)(0);
-    encoder_targets.data[1] = (short)(0);
-    encoder_targets.data[2] = (short)(0);
-    encoder_targets.data[3] = (short)(0);
-    encoder_targets.data[4] = (short)(0);
-    encoder_targets.data[5] = (short)(0);
-    encoder_targets.data[6] = (short)(0);*/
-    ROS_INFO("TARGET LOAD FIN");    
-    
-    ROS_INFO("traj fin -- encoder pub start");
-    encoder_targets.data = temp;
-    pub_.publish(encoder_targets);
-    ROS_INFO("CB FIN");
+    //Assuming joint order:  joint_names: ['shoulder_updown', 'shoulder_joint', 'elbow', 'wrist', 'wrist_gripper_connection_roll', 'wrist_gripper_connection_pitch']
+   
+    for(int p = 1; p < waypointCount; p++)
+    {
+      trajectory_msgs::JointTrajectoryPoint point = input.result.planned_trajectory.joint_trajectory.points[p];
+      ROS_INFO("TARGET LOAD START || WAYPOINT: %d", p);
+           
+      //gripper
+      temp[0] = (short) (
+                         0
+                         );
+
+      //w1=(r-p)/k
+      temp[1] = (short) (
+                               (point.positions[5]
+                               - point.positions[4])
+                               / 0.001294162
+                               );
+      //w2=(-r-p)/k
+      temp[2] = (short) (
+                               ((-point.positions[5])
+                               - point.positions[4])
+                               / 0.001294162
+                               );
+      //wrist
+      /*THIS IS WRONG*/
+      temp[3] = (short) (
+                                (point.positions[3] / -0.00179193)
+                                );
+                                
+      //elbow
+      temp[4] = (short) (
+                                (point.positions[2] / 0.001194503)
+                                );
+
+      //shoulder_joint
+      temp[5] = (short) (
+                                (point.positions[1] / -0.000597252)
+                                );
+      
+      //shoulder_updown
+      temp[6] = (short) (
+                                (point.positions[0] / -0.0002667)
+                                );     
+
+      
+      ROS_INFO("TARGET LOAD FIN");    
+      
+      ROS_INFO("data = temp and publish to encoder_targets [START]");
+      encoder_targets.data = temp;
+      pub_.publish(encoder_targets);
+      ROS_INFO("CB FIN");
+    }
   }
 
 private:
