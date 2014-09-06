@@ -1,0 +1,51 @@
+<launch>
+
+  <!-- By default, we do not start a database (it can be large) -->
+  <arg name="db" default="false" />
+  <!-- By default, we are not in debug mode -->
+  <arg name="debug" default="false" />
+
+  <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+  <include file="$(find moveit_hsrdp)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true"/>
+  </include>
+
+
+  <!--<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+     <param name="/use_gui" value="true"/> 
+     <rosparam param="source_list">["/joint_states"]</rosparam>
+  </node>-->
+
+  <rosparam command="load" file="$(find moveit_hsrdp)/config/joint_names.yaml"/>
+
+  <param name="robot_description" textfile="$(find hsrdp)/umi_rtx_100.urdf"/>
+  <node name="umi_bridge" pkg="hsrdp" type="umi_bridge" />
+  
+  <!--<node name="hsrdp_moveit_controller_manager" pkg="action_hsrdp" type="hsrdp_moveit_controller_manager" />-->
+  
+  <node name="trajectoryServer" pkg="action_hsrdp" type="trajectoryServer" />
+  <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager"/>
+  <!--<param name="moveit_controller_manager" value="action_hsrdp/hsrdp_moveit_controller_manager"/>-->-->
+  <rosparam file="$(find moveit_hsrdp)/config/controllers.yaml"/>
+  
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+
+  <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) :P-->
+  <include file="$(find moveit_hsrdp)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>  
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find moveit_hsrdp)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- If database loading was enabled, start mongodb as well -->
+  <include file="$(find moveit_hsrdp)/launch/default_warehouse_db.launch" if="$(arg db)"/>
+
+</launch>

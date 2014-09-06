@@ -1,15 +1,21 @@
 #include "ros/ros.h"
+#include <control_msgs/FollowJointTrajectoryAction.h>
 #include "std_msgs/Int16MultiArray.h"
 #include <sensor_msgs/JointState.h>
+#include <moveit_msgs/MoveGroupActionResult.h>
 #include <tf/transform_broadcaster.h>
 
 /**
  * A intermediary node that translates the encoder counts from the umi arm
  * into joint states, and likewise target joint states to target joint counts
  */
- 
+
+
+std_msgs::Int16MultiArray encoder_targets;
 sensor_msgs::JointState joint_state;
 bool is_state_to_publish = false;
+
+//'shoulder_updown', 'shoulder_joint', 'elbow', 'wrist', 'wrist_gripper_connection_roll', 'wrist_gripper_connection_pitch'
 
 void encoderProcess(const std_msgs::Int16MultiArray& msg)
 {
@@ -45,7 +51,7 @@ void encoderProcess(const std_msgs::Int16MultiArray& msg)
   joint_state.name[5] ="wrist";
   joint_state.position[5] = float(msg.data[3]) * -0.00179193;
 
-  joint_state.name[6] ="";
+  joint_state.name[6] ="gripper";
   joint_state.position[6] = msg.data[0];
   
   is_state_to_publish = true;
@@ -58,10 +64,10 @@ int main(int argc, char **argv)
 
   ros::NodeHandle n;
 
-  ros::Subscriber sub = n.subscribe("arm_encoders", 1000, encoderProcess);
-
+  ros::Subscriber sub_encoders = n.subscribe("arm_encoders", 1000, encoderProcess);
+  
   ros::Publisher joint_pub = n.advertise<sensor_msgs::JointState>("joint_states", 1);
-  //ros::Publisher arm_targets_pub = n.advertise<std_msgs::Int16MultiArray>("arm_encoder_targets", 1000);
+   
 
   tf::TransformBroadcaster broadcaster;
   const double degree = M_PI/180;
@@ -88,9 +94,11 @@ int main(int argc, char **argv)
       //send the joint state and transform
       if(is_state_to_publish)
       {
-		joint_pub.publish(joint_state);
-		is_state_to_publish = false;
-	  }
+        joint_pub.publish(joint_state);
+        ROS_INFO("JOINTS PUB");
+        is_state_to_publish = false;
+      }     
+      
       
       broadcaster.sendTransform(odom_trans);
 
