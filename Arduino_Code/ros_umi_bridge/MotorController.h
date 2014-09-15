@@ -36,7 +36,7 @@ public:
 
     // set the position value
     void setThrottle ( const int throttle_raw) {
-       throttle = constrain(throttle_raw, -254, 254);
+       throttle = constrain(throttle_raw, -191, 191);
        if(throttle_raw > 0)
        {
          if(one_pwm_type)
@@ -52,7 +52,7 @@ public:
        }else if(throttle_raw < 0){
          if(one_pwm_type)
          {
-           analogWrite(pin_a,throttle);
+           analogWrite(pin_a,abs(throttle));
            digitalWrite(pin_b, LOW);
          }else{ 
           analogWrite(pin_b, abs(throttle));
