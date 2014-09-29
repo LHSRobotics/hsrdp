@@ -1,0 +1,12 @@
+controller_list:
+  - name: ""
+    action_ns: trajectoryServer
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - shoulder_updown
+      - shoulder_joint
+      - elbow
+      - wrist
+      - wrist_gripper_connection_roll
+      - wrist_gripper_connection_pitch

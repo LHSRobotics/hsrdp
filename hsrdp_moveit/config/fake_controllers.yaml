@@ -1,0 +1,13 @@
+controller_list:
+  - name: fake_main_group_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - shoulder_updown
+      - shoulder_joint
+      - elbow
+      - wrist
+      - wrist_gripper_connection_roll
+      - wrist_gripper_connection_pitch
+

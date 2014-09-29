@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: hsrdp
+    relative_path: umi_rtx_100.urdf
+  SRDF:
+    relative_path: config/HSRDP.srdf
+  CONFIG:
+    generated_timestamp: 1408815154

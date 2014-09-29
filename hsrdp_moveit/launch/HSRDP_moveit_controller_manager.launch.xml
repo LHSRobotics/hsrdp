@@ -1,0 +1,10 @@
+<launch>
+
+  <!-- Set the param that trajectory_execution_manager needs to find the controller plugin -->
+  <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager"/>
+  <!--<param name="moveit_controller_manager" value="hsrdp_action/hsrdp_moveit_controller_manager"/>-->
+  <rosparam file="$(find hsrdp_moveit)/config/controllers.yaml"/>
+
+  <!-- The rest of the params are specific to this plugin -->
+
+</launch>

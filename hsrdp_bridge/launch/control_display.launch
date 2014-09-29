@@ -1,0 +1,21 @@
+<launch>
+	<arg name="gui" default="False" />
+	
+	<rosparam file="$(find hsrdp_bridge)/config/hsrdp_control.yaml" command="load" />
+
+	<param name="robot_description" textfile="$(find hsrdp_bridge)/umi_rtx_100.urdf" />
+	<param name="use_gui" value="$(arg gui)"/>
+
+
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller joint_position_controller"/>
+
+	<node name="serial_node" pkg="rosserial_python" type="serial_node.py" output="screen" >
+		<param name="~port" value="/dev/ttyACM0"/>
+	</node>
+
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"></node>
+
+	<node name="umi_bridge" pkg="hsrdp" type="umi_bridge" ></node>
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find hsrdp_bridge)/src/urdf.rviz" />
+</launch>

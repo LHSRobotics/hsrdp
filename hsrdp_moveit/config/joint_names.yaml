@@ -1,0 +1,1 @@
+controller_joint_names: [shoulder_updown, shoulder_joint, elbow, wrist, wrist_gripper_connection_roll, wrist_gripper_connection_pitch]

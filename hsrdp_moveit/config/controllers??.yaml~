@@ -1,0 +1,33 @@
+arm_controller:
+  type: "robot_mechanism_controllers/JointTrajectoryActionController"
+  joints:
+    - shoulder_updown
+    - shoulder_joint
+    - elbow
+    - wrist
+    - wrist_gripper_connection_roll
+    - wrist_gripper_connection_pitch
+    - gripper
+  gains:
+    shoulder_updown:
+      p: 2400.0
+    shoulder_joint:
+      p: 1200.0
+    elbow:
+      p: 1200.0
+    wrist:
+      p: 1200.0
+    wrist_gripper_connection_roll:
+      p: 1200.0
+    wrist_gripper_connection_pitch:
+      p: 1200.0
+    gripper:
+      p: 1200.0
+    joints:
+      - shoulder_updown
+      - shoulder_joint
+      - elbow
+      - wrist
+      - wrist_gripper_connection_roll
+      - wrist_gripper_connection_pitch
+      - gripper

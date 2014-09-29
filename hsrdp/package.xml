@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+  <name>hsrdp</name>
+  <version>0.0.1</version>
+  <description>A custom UMI RTX 100 robot arm controller package </description>
+
+  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
+  <maintainer email="mentarus@gmail.com">Eugene N</maintainer>
+
+  <license>TODO</license>
+
+  <!-- <url type="website">http://ros.org/wiki/HSRDP</url> -->
+  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>hsrdp_moveit</run_depend>
+  <run_depend>hsrdp_action</run_depend>
+  <run_depend>hsrdp_bridge</run_depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <metapackage/>
+  </export>
+</package>
