@@ -4,11 +4,9 @@ hsrdp:
     type: joint_state_controller/JointStateController
     publish_rate: 50  
 
-  
-  
-  Hsrdp_controller:
-    type: hsrdp/Hsrdp
-    publish_rate: 50
+#  Hsrdp_controller:
+#    type: hsrdp/Hsrdp
+#    publish_rate: 50
 
   # Position Controllers ---------------------------------------
 #  joint_position_controller:

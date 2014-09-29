@@ -1,5 +1,4 @@
 <package>
-
   <name>hsrdp_moveit</name>
   <version>0.2.0</version>
   <description>
@@ -20,8 +19,8 @@
   <run_depend>joint_state_publisher</run_depend>
   <run_depend>robot_state_publisher</run_depend>
   <run_depend>xacro</run_depend>
-  <build_depend>hsrdp_bridge/build_depend>
-  <run_depend>hsrdp_bridge/run_depend>
+  <build_depend>hsrdp_bridge</build_depend>
+  <run_depend>hsrdp_bridge</run_depend>
 
 
   <buildtool_depend>catkin</buildtool_depend>

@@ -17,9 +17,9 @@
 
   <rosparam command="load" file="$(find hsrdp_moveit)/config/joint_names.yaml"/>
 
-  <param name="robot_description" textfile="$(find hsrdp_control)/umi_rtx_100.urdf"/>
+  <param name="robot_description" textfile="$(find hsrdp_bridge)/umi_rtx_100.urdf"/>
   
-  <node name="umi_bridge" pkg="hsrdp" type="umi_bridge" />
+  <node name="umi_bridge" pkg="hsrdp_bridge" type="umi_bridge" />
   
   <node name="trajectoryServer" ns="arm_controller" pkg="hsrdp_action" type="trajectoryServer" />
   

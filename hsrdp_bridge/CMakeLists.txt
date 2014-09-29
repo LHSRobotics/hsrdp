@@ -134,7 +134,7 @@ include_directories(
 
 include_directories(include ${catkin_INCLUDE_DIRS})
 
-add_executable(EMFPubSub src/EMFPubSub.cpp)
-target_link_libraries(EMFPubSub ${catkin_LIBRARIES})
+#add_executable(EMFPubSub src/EMFPubSub.cpp)
+#target_link_libraries(EMFPubSub ${catkin_LIBRARIES})
 add_executable(umi_bridge src/umi_bridge.cpp)
 target_link_libraries(umi_bridge ${catkin_LIBRARIES})

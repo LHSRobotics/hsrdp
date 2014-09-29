@@ -110,14 +110,14 @@ include_directories(
 
 ## Declare a cpp executable
 add_executable(trajectoryServer src/trajectoryServer.cpp)
-add_executable(gripperServer src/gripperServer.cpp)
+#add_executable(gripperServer src/gripperServer.cpp)
 #add_executable(hsrdp_moveit_controller_manager src/hsrdp_moveit_controller_manager.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 add_dependencies(
   trajectoryServer
-  gripperServer
+ # gripperServer
 #  hsrdp_moveit_controller_manager
   hsrdp_action_generate_messages_cpp
   ${hsrdp_action_EXPORTED_TARGETS}
