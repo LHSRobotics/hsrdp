@@ -22,4 +22,3 @@ arm_controller:
       p: 1200.0
     wrist_gripper_connection_pitch:
       p: 1200.0
-      p: 1200.0

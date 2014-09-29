@@ -1,0 +1,41 @@
+#include <ros/ros.h>
+
+class SubscribeAndPublish
+{
+public:
+  SubscribeAndPublish()
+  {
+    //Topic you want to publish
+    pub_ = n_.advertise<PUBLISHED_MESSAGE_TYPE>("/arm_encoder_targets", 1);
+
+    //Topic you want to subscribe
+    sub_ = n_.subscribe("/move_group/result", 1, &SubscribeAndPublish::callback, this);
+  }
+
+  void callback(const moveit_msgs::MoveGroupActionResult& input)
+  {
+    ros::Publisher arm_targets_pub;
+    
+    input.result.planned_trajectory.joint_trajectory.points[1];
+    
+    pub_.publish(arm_targets_pub);
+  }
+
+private:
+  ros::NodeHandle n_; 
+  ros::Publisher pub_;
+  ros::Subscriber sub_;
+
+}//End of class SubscribeAndPublish
+
+int main(int argc, char **argv)
+{
+  //Initiate ROS
+  ros::init(argc, argv, "subscribe_and_publish");
+
+  //Create an object of class SubscribeAndPublish that will take care of everything
+  SubscribeAndPublish SAPObject;
+
+  ros::spin();
+
+  return 0;

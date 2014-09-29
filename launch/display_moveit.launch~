@@ -5,7 +5,7 @@
   <!-- By default, we are not in debug mode -->
   <arg name="debug" default="false" />
 
-  <remap from="arm_controller/arm_encoder_targets" to="arm_encoder_targets"/>
+  <remap from="/arm_controller/arm_encoder_targets" to="/arm_encoder_targets"/>
 
 
   <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
