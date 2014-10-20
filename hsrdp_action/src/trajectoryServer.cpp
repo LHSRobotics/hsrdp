@@ -55,9 +55,9 @@ public:
     //bool success = true;
 
     std::vector<std::string> j_n = goal->trajectory.joint_names;
-    size_t size = 7;
+    size_t size = 6;
     std::vector<short> temp(size);
-    std_msgs::Int16MultiArray encoder_targets;// = {layout: {dim: [], data_offset: 0}, data: [0, 0, 0, 0, 0, 0, -375]};
+    std_msgs::Int16MultiArray encoder_targets;
     ROS_INFO("1");
     int waypointCount = goal->trajectory.points.size();
     ROS_INFO("Waypoint Count: %d", waypointCount);
@@ -67,44 +67,40 @@ public:
     {
       trajectory_msgs::JointTrajectoryPoint point = goal->trajectory.points[p];
       ROS_INFO("TARGET conv START || WAYPOINT: %d", p);
-           
-      //gripper
-      temp[0] = (short) (
-                         0
-                         );
+
       ROS_INFO("isActive() >>> %s", as_.isActive() ? "true" : "false");
       
       //w1=(r-p)/k
-      temp[1] = (short) (
+      temp[0] = (short) (
                                (getPositionFromJointName("wrist_gripper_connection_pitch", j_n, point)
                                - getPositionFromJointName("wrist_gripper_connection_roll", j_n, point))
                                / 0.001294162
                                );
                                ROS_INFO("isActive() >>> %s", as_.isActive() ? "true" : "false");
       //w2=(-r-p)/k
-      temp[2] = (short) (
+      temp[1] = (short) (
                                ((-getPositionFromJointName("wrist_gripper_connection_pitch", j_n, point))
                                - getPositionFromJointName("wrist_gripper_connection_roll", j_n, point))
                                / 0.001294162
                                );
       //wrist
       /*THIS IS WRONG*/
-      temp[3] = (short) (
+      temp[2] = (short) (
                                 (getPositionFromJointName("wrist", j_n, point) / -0.00179193)
                                 );
                                 
       //elbow
-      temp[4] = (short) (
+      temp[3] = (short) (
                                 (getPositionFromJointName("elbow", j_n, point) / 0.001194503)
                                 );
 
       //shoulder_joint
-      temp[5] = (short) (
+      temp[4] = (short) (
                                 (getPositionFromJointName("shoulder_joint", j_n, point) / -0.000597252)
                                 );
       
       //shoulder_updown
-      temp[6] = (short) (
+      temp[5] = (short) (
                                 (getPositionFromJointName("shoulder_updown", j_n, point) / -0.0002667)
                                 );     
 

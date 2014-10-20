@@ -16,7 +16,7 @@ protected:
   // create messages that are used to published feedback/result
   control_msgs::GripperCommandFeedback feedback_;
   control_msgs::GripperCommandResult result_;
-  std_msgs::Int16MultiArray encoder_targets;
+  std_msgs::Int16 gripper_encoder_target;
   ros::Publisher gripper_target_pub;
   
 public:
@@ -27,7 +27,7 @@ public:
     {
       as_.start();
       
-      gripper_target_pub = nh_.advertise<std_msgs::Int16MultiArray>("arm_encoder_targets", 1000);  
+      gripper_target_pub = nh_.advertise<std_msgs::Int16>("gripper_encoder_target", 1000);  
     
     }
 
@@ -42,19 +42,16 @@ public:
     ROS_INFO("isActive() >>> %s", as_.isActive() ? "true" : "false");
     //bool success = true;
 
-    size_t size = 7;
-    std::vector<short> temp(size);
-    std_msgs::Int16MultiArray encoder_targets;// = {layout: {dim: [], data_offset: 0}, data: [0, 0, 0, 0, 0, 0, -375]};
+    std_msgs::Int16 gripper_encoder_target;// = {layout: {dim: [], data_offset: 0}, data: [0, 0, 0, 0, 0, 0, -375]};
       //gripper
-      temp[0] = (short) (
+      short temp = (short) (
                          0
                          );
-      
-      ROS_INFO("TARGET conv FIN");    
+         
       
       ROS_INFO("data = temp and publish to encoder_target [START]");
-      encoder_targets.data = temp;
-      gripper_target_pub.publish(encoder_targets);
+      gripper_encoder_target = temp;
+      gripper_target_pub.publish(gripper_encoder_target);
                              
       ROS_INFO("isActive() >>> %s", as_.isActive() ? "true" : "false");
       
@@ -63,8 +60,6 @@ public:
       if(ros::ok())
       {ROS_INFO("isActive() >>> %s", as_.isActive() ? "true" : "false");
         ROS_INFO("%s: Succeeded", action_name_.c_str());
-        // set the action state to succeeded
-        
         as_.setSucceeded(result_);
       }
     
@@ -79,7 +74,7 @@ int main(int argc, char** argv)
   GripperCommandAction gripperServer(ros::this_node::getName());
   
   
-  ROS_INFO("MAIN RUN");
+  ROS_INFO("gripperServer RUN");
   ros::spin();
 
   return 0;

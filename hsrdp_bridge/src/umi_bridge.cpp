@@ -11,8 +11,9 @@
  */
 
 
-std_msgs::Int16MultiArray encoder_targets;
+//std_msgs::Int16MultiArray encoder_targets;
 sensor_msgs::JointState joint_state;
+
 bool is_state_to_publish = false;
 
 //'shoulder_updown', 'shoulder_joint', 'elbow', 'wrist', 'wrist_gripper_connection_roll', 'wrist_gripper_connection_pitch'
@@ -51,9 +52,8 @@ void encoderProcess(const std_msgs::Int16MultiArray& msg)
   joint_state.name[5] ="wrist";
   joint_state.position[5] = float(msg.data[3]) * -0.00179193;
   
-  joint_state.name[6] ="gripper";
+  joint_state.name[6] ="gripper_left";
   joint_state.position[6] = msg.data[0];
-  
   
   is_state_to_publish = true;
 }

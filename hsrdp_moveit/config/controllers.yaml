@@ -15,4 +15,4 @@ controller_list:
     type: GripperCommand
     default: true
     joints:
-      - gripper
+      - gripper_left
