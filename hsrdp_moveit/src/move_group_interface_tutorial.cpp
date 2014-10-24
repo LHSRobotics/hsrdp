@@ -18,7 +18,6 @@ int main(int argc, char **argv)
 
   sleep(5.0);
   
-  
   moveit::planning_interface::MoveGroup group("main_group");
   moveit::planning_interface::MoveGroup group_gripper("gripper");
   group.setEndEffector("grip");
@@ -43,9 +42,8 @@ int main(int argc, char **argv)
   group.setPoseTarget(target_pose1);
 
   moveit::planning_interface::MoveGroup::Plan plan_1;
-  bool success = group.plan(plan_1);
-
-  ROS_INFO("Visualizing plan 1 (pose goal) %s",success?"":"FAILED");    
+  
+  ROS_INFO("Visualizing plan 1 (pose goal) %s",group.plan(plan_1)?"":"FAILED");    
   sleep(5.0);
 
   group.move();
@@ -53,16 +51,18 @@ int main(int argc, char **argv)
 //----------------------------------------------------------------------
   
 //Motion 2--------------------------------------------------------------
-  group_gripper.setJointValueTarget("gripper_left", -0.14);
+  std::vector<double> group_gripper_variable_values;
+  group_gripper.getCurrentState()->copyJointGroupPositions(group_gripper.getCurrentState()->getRobotModel()->getJointModelGroup(group_gripper.getName()), group_gripper_variable_values);
+  group_gripper_variable_values[0] = -0.13;
+  group_gripper.setJointValueTarget(group_gripper_variable_values);
   
   moveit::planning_interface::MoveGroup::Plan plan_2;
-  success = group.plan(plan_2);
 
-  ROS_INFO("Visualizing plan 2 (joint target) %s",success?"":"FAILED");    
+  ROS_INFO("Visualizing plan 2 (joint target) %s",group_gripper.plan(plan_2)?"":"FAILED");    
   sleep(5.0);
 
   group.move();
-  sleep(15.0);
+  sleep(8.0);
 //----------------------------------------------------------------------
 
   ros::shutdown();
