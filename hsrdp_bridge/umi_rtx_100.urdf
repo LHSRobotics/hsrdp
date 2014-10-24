@@ -178,7 +178,7 @@
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <mimic joint="gripper_left" multiplier="-1" />
     <axis xyz="0 0 -1"/>
-    <limit lower="-0.15" upper="0.06" effort="1" velocity="1"/>
+    <limit lower="-0.06" upper="0.15" effort="1" velocity="1"/>
   </joint>
 </robot>
 

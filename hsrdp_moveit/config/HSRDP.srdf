@@ -32,6 +32,7 @@
       <link name="right_finger" />
       <joint name="gripper_left" />
       <joint name="gripper_right" />
+      <chain base_link="gripper_base" tip_link="right_finger" />
     </group>
     <group name="arm">
       <group name="main_group" />
