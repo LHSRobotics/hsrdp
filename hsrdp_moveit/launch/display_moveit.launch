@@ -31,6 +31,10 @@
   
   <node name="trajectoryServer" ns="arm_controller" pkg="hsrdp_action" type="trajectoryServer" />
   
+  <node name="gripperServer" ns="gripper_controller" pkg="hsrdp_action" type="gripperServer" />
+  
+  <node name="move_group_interface_tutorial" pkg="hsrdp_moveit" type="move_group_interface_tutorial" />
+  
   <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager"/>
   
   <rosparam file="$(find hsrdp_moveit)/config/controllers.yaml"/>

@@ -2,6 +2,17 @@ cmake_minimum_required(VERSION 2.8.3)
 project(hsrdp_moveit)
 
 find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS moveit_ros_planning_interface)
+
+include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(SYSTEM ${Boost_INCLUDE_DIR} ${EIGEN_INCLUDE_DIRS})
+
+add_executable(move_group_interface_tutorial src/move_group_interface_tutorial.cpp)
+
+target_link_libraries(
+  move_group_interface_tutorial
+  ${catkin_LIBRARIES}
+)
 
 catkin_package()
 

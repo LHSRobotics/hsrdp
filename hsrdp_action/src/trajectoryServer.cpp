@@ -106,7 +106,6 @@ public:
 
       
       ROS_INFO("TARGET conv FIN");    
-      
       ROS_INFO("data = temp and publish to encoder_targets [START]");
       encoder_targets.data = temp;
       arm_targets_pub.publish(encoder_targets);
@@ -124,13 +123,13 @@ public:
         //success = false;
         break;
       }
-      }
+    }
       // publish the feedback
       //as_.publishFeedback(feedback_);
       ROS_INFO("isActive() >>> %s", as_.isActive() ? "true" : "false");
       if(ros::ok())
-      {ROS_INFO("isActive() >>> %s", as_.isActive() ? "true" : "false");
-       //result_.sequence = feedback_.sequence;
+      {
+        ROS_INFO("isActive() >>> %s", as_.isActive() ? "true" : "false");
         ROS_INFO("%s: Succeeded", action_name_.c_str());
         // set the action state to succeeded
         result_.error_code = 0;//succesful error code (I think)
