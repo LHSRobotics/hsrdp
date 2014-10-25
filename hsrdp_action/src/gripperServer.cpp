@@ -3,7 +3,6 @@
 #include <actionlib/server/simple_action_server.h>
 
 #include <control_msgs/GripperCommandAction.h>
-#include <std_msgs/Int16MultiArray.h>
 #include <std_msgs/Int16.h>
 
 
@@ -41,6 +40,9 @@ public:
     ROS_INFO("isActive() >>> %s", as_.isActive() ? "true" : "false");
 
     // = {layout: {dim: [], data_offset: 0}, data: [0, 0, 0, 0, 0, 0, -375]};
+    
+    float pivot_to_tip
+    
     int16_t temp = 0;
     
     ROS_INFO("data = temp and publish to encoder_target [START]");
