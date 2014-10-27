@@ -83,17 +83,19 @@ public:
                                - getPositionFromJointName("wrist_gripper_connection_roll", j_n, point))
                                / 0.001294162
                                );
-      //wrist
-      /*THIS IS WRONG*/
-      temp[2] = (short) (
-                                (getPositionFromJointName("wrist", j_n, point) / -0.00179193)
-                                );
+
                                 
       //elbow
       temp[3] = (short) (
                                 (getPositionFromJointName("elbow", j_n, point) / 0.001194503)
                                 );
-
+      //wrist
+      /*THIS IS WRONG*/
+      temp[2] = (short) (
+                                (getPositionFromJointName("wrist", j_n, point) 
+                                - (float)temp[3]) 
+                                / -0.00179193
+                                );
       //shoulder_joint
       temp[4] = (short) (
                                 (getPositionFromJointName("shoulder_joint", j_n, point) / -0.000597252)

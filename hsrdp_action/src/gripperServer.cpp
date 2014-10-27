@@ -41,7 +41,7 @@ public:
 
     // = {layout: {dim: [], data_offset: 0}, data: [0, 0, 0, 0, 0, 0, -375]};
     
-    float pivot_to_tip
+    float pivot_to_tip;
     
     int16_t temp = 0;
     

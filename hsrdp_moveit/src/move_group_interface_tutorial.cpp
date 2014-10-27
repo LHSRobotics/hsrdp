@@ -41,59 +41,61 @@ int main(int argc, char **argv)
   downLeft.z = 0.5;
   downLeft.w = 0.5;
   
+  float tableheight = 0.1;
+  
   geometry_msgs::Pose pos0;
   pos0.orientation = downLeft;
   pos0.position.x = 0.3;
   pos0.position.y = -0.15;
-  pos0.position.z = 0.4;
+  pos0.position.z = tableheight;
   
   geometry_msgs::Pose pos1;
   pos1.orientation = downLeft;
   pos1.position.x = 0.3;
   pos1.position.y = -0.05;
-  pos1.position.z = 0.4;
+  pos1.position.z = tableheight;
   
   geometry_msgs::Pose pos2;
   pos2.orientation = downLeft;
   pos2.position.x = 0.3;
   pos2.position.y = 0.05;
-  pos2.position.z = 0.4;
+  pos2.position.z = tableheight;
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   geometry_msgs::Pose pos3;
   pos3.orientation = downLeft;
   pos3.position.x = 0.4;
   pos3.position.y = -0.15;
-  pos3.position.z = 0.4;
+  pos3.position.z = tableheight;
   
   geometry_msgs::Pose pos4;
   pos4.orientation = downLeft;
   pos4.position.x = 0.4;
   pos4.position.y = -0.05;
-  pos4.position.z = 0.4;
+  pos4.position.z = tableheight;
   
   geometry_msgs::Pose pos5;
   pos5.orientation = downLeft;
   pos5.position.x = 0.4;
   pos5.position.y = 0.05;
-  pos5.position.z = 0.4;
+  pos5.position.z = tableheight;
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   geometry_msgs::Pose pos6;
   pos6.orientation = downLeft;
   pos6.position.x = 0.5;
   pos6.position.y = -0.15;
-  pos6.position.z = 0.4;
+  pos6.position.z = tableheight;
   
   geometry_msgs::Pose pos7;
   pos7.orientation = downLeft;
   pos7.position.x = 0.5;
   pos7.position.y = -0.05;
-  pos7.position.z = 0.4;
+  pos7.position.z = tableheight;
   
   geometry_msgs::Pose pos8;
   pos8.orientation = downLeft;
   pos8.position.x = 0.5;
   pos8.position.y = 0.05;
-  pos8.position.z = 0.4;
+  pos8.position.z = tableheight;
 
 
 //Motion 1--------------------------------------------------------------
@@ -101,41 +103,50 @@ int main(int argc, char **argv)
   group.setPoseTarget(pos0);
   ROS_INFO("Visualizing plan 1 (pose goal) %s",group.plan(plan)?"pos0":"FAILED");    
   sleep(4.5);
+  group.move();
   
   group.setPoseTarget(pos1);
   ROS_INFO("Visualizing plan 1 (pose goal) %s",group.plan(plan)?"pos1":"FAILED");    
   sleep(4.5);
+  group.move();
   
   group.setPoseTarget(pos2);
   ROS_INFO("Visualizing plan 1 (pose goal) %s",group.plan(plan)?"pos2":"FAILED");    
   sleep(4.5);
+  group.move();
   
   group.setPoseTarget(pos3);
   ROS_INFO("Visualizing plan 1 (pose goal) %s",group.plan(plan)?"pos3":"FAILED");    
   sleep(4.5);
+  group.move();
   
   group.setPoseTarget(pos4);
   ROS_INFO("Visualizing plan 1 (pose goal) %s",group.plan(plan)?"pos4":"FAILED");    
   sleep(4.5);
+  group.move();
   
   group.setPoseTarget(pos5);
   ROS_INFO("Visualizing plan 1 (pose goal) %s",group.plan(plan)?"pos5":"FAILED");    
   sleep(4.5);
+  group.move();
   
   group.setPoseTarget(pos6);
   ROS_INFO("Visualizing plan 1 (pose goal) %s",group.plan(plan)?"pos6":"FAILED");    
   sleep(4.5);
+  group.move();
   
   group.setPoseTarget(pos7);
   ROS_INFO("Visualizing plan 1 (pose goal) %s",group.plan(plan)?"pos7":"FAILED");    
   sleep(4.5);
+  group.move();
   
   group.setPoseTarget(pos8);
   ROS_INFO("Visualizing plan 1 (pose goal) %s",group.plan(plan)?"pos8":"FAILED");    
   sleep(4.5);
+  group.move();
 
-//  group.move();
-//  sleep(7.0);
+  //group.move();
+  sleep(7.0);
 //----------------------------------------------------------------------
   
 //Motion 2--------------------------------------------------------------
@@ -149,7 +160,7 @@ int main(int argc, char **argv)
   ROS_INFO("Visualizing plan 2 (joint target) %s",group_gripper.plan(plan_2)?"":"FAILED");    
   sleep(5.0);
 
-  group.move();
+  //group.move();
   sleep(8.0);
 //----------------------------------------------------------------------
 

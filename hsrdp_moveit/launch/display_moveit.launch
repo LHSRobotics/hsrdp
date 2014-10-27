@@ -5,11 +5,9 @@
 
   <arg name="debug" default="false" />
 
-  <remap from="arm_controller/arm_encoder_targets" to="arm_encoder_targets"/>
-  <remap from="gripper_controller/gripper_encoder_targets" to="gripper_encoder_targets"/>
   
   <node name="serial_node" pkg="rosserial_python" type="serial_node.py" output="screen" >
-		<param name="~port" value="/dev/ttyACM0"/>
+		<param name="~port" value="/dev/ttyACM6"/>
 	</node>
 
   <include file="$(find hsrdp_moveit)/launch/planning_context.launch">
@@ -20,12 +18,12 @@
 
   <param name="robot_description" textfile="$(find hsrdp_bridge)/umi_rtx_100.urdf"/>
   
-  <!--
+  
   <node name="umi_bridge" pkg="hsrdp_bridge" type="umi_bridge" />
-  -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+  
+  <!--<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="/use_gui" value="true"/>
-  </node>
+  </node>-->
   
   
   
@@ -39,7 +37,7 @@
   
   <rosparam file="$(find hsrdp_moveit)/config/controllers.yaml"/>
   
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+  <!--<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />-->
 
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) :P-->
   <include file="$(find hsrdp_moveit)/launch/move_group.launch">

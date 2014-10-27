@@ -13,6 +13,7 @@
 
 #include <ros.h>
 #include <std_msgs/Int16MultiArray.h>
+#include <std_msgs/Int16.h>
 #include "Streaming.h"
 #include "PinChangeInt.h"
 #include "Encoder.h"
@@ -40,7 +41,8 @@ MotorController motors[7] = {
 };
 
 int positions[7];
-int* targets;
+int targets[7];
+int last_gripper_target = 0;
 
 boolean led_on;
 int led = 13;
@@ -48,13 +50,25 @@ long publisher_timer;
 
 //The callback function that receives listens to new postition targets
 void targetsCb( const std_msgs::Int16MultiArray& target_msg){
-  targets = target_msg.data;
+  targets[0] = last_gripper_target;
+  targets[1] = target_msg.data[0];
+  targets[2] = target_msg.data[1];
+  targets[3] = target_msg.data[2];
+  targets[4] = target_msg.data[3];
+  targets[5] = target_msg.data[4];
+  targets[6] = target_msg.data[5];
+}
+
+void gripper_targetCb( const std_msgs::Int16& target_msg){
+  digitalWrite(led, HIGH);
+  targets[0] = target_msg.data;
 }
 
 //Set up the ros node and publisher
 std_msgs::Int16MultiArray joints_msg;
 ros::Publisher pub_joints_state("arm_encoders", &joints_msg);
-ros::Subscriber<std_msgs::Int16MultiArray> sub("arm_encoder_targets", targetsCb );
+ros::Subscriber<std_msgs::Int16MultiArray> sub("arm_controller/arm_encoder_targets", targetsCb );
+ros::Subscriber<std_msgs::Int16> sub_grip("gripper_controller/gripper_encoder_target", gripper_targetCb );
 
 ros::NodeHandle nh;
 
@@ -62,12 +76,19 @@ void setup() {
   
     //Set the init position to -375 (ref RTX_Inside.pdf)
     encoders[6].setPosition(-375);  
+
+    targets[0] = 0;
+    targets[1] = 0;
+    targets[2] = 0;
+    targets[3] = 0;
+    targets[4] = 0;
+    targets[5] = 0;
+    targets[6] = -375;
     
-    int defaultTargets[] = {0,0,0,0,0,-375,0};
-    targets = defaultTargets;
     nh.initNode();
     nh.advertise(pub_joints_state);
     nh.subscribe(sub);
+    nh.subscribe(sub_grip);
      
     #ifdef UMI_DEBUG
     Serial.begin (57600);
@@ -94,13 +115,13 @@ void loop(){
     publisher_timer = millis() + 200; //publish at 5 hz
     
         //Heartbeat
-    if(led_on){
+    /*if(led_on){
      digitalWrite(led, HIGH);
      led_on = 0;
     }else{
      digitalWrite(led, LOW);
      led_on = 1;
-    }
+    }*/
     for(int i=0; i < 7; i++)
     {
        moveJoint(i);
@@ -173,4 +194,5 @@ int* readEncoders(){
        #endif
     return positions;
 }
+
 
