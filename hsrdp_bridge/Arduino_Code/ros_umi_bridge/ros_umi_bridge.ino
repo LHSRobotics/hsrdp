@@ -1,6 +1,6 @@
 /*  Custom UMI RTX 100 controller (part of the HSRDP project http://hack.rs/p/HSRDP)
  *  Author: @mentarus
- *  Last updated: 04 September 2013 
+ *  Last updated: 13 NOV 2014 
  *  Prereqs: Built ROS arudino libs as per http://wiki.ros.org/rosserial_arduino/Tutorials/Arduino%20IDE%20Setup
  */
 
@@ -73,7 +73,6 @@ ros::Subscriber<std_msgs::Int16> sub_grip("gripper_controller/gripper_encoder_ta
 ros::NodeHandle nh;
 
 void setup() {
-  
     //Set the init position to -375 (ref RTX_Inside.pdf)
     encoders[6].setPosition(-375);  
 
