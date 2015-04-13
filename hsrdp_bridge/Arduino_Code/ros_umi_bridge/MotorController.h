@@ -41,21 +41,21 @@ public:
        {
          if(one_pwm_type)
          {
-           analogWrite(pin_a,throttle);
+           analogWrite(pin_a,abs(throttle));
            digitalWrite(pin_b, HIGH);
          } else
          {
           analogWrite(pin_b, 0);
-          analogWrite(pin_a, throttle);
+          analogWrite(pin_a, abs(throttle));
          }
           
        }else if(throttle_raw < 0){
          if(one_pwm_type)
          {
-           analogWrite(pin_a,throttle);
+           analogWrite(pin_a,abs(throttle));
            digitalWrite(pin_b, LOW);
          }else{ 
-          analogWrite(pin_b, abs(throttle));
+          analogWrite(pin_b, throttle);
           analogWrite(pin_a, 0);
          }
        }else{
@@ -77,3 +77,4 @@ private:
 };
 
 #endif // __MOTORCONTROLLER_H__
+

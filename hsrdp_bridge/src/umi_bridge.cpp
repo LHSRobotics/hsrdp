@@ -25,8 +25,8 @@ void encoderProcess(const std_msgs::Int16MultiArray& msg)
 
   //update joint_state
   joint_state.header.stamp = ros::Time::now();
-  joint_state.name.resize(7);
-  joint_state.position.resize(7);
+  joint_state.name.resize(8);
+  joint_state.position.resize(8);
 
   joint_state.name[0] ="shoulder_joint";
   joint_state.position[0] = float(msg.data[5]) * -0.000597252;
@@ -50,10 +50,13 @@ void encoderProcess(const std_msgs::Int16MultiArray& msg)
   WRONG
   */
   joint_state.name[5] ="wrist";
-  joint_state.position[5] = (float(msg.data[3]) * -0.00179193) - (joint_state.position[4] + joint_state.position[0]);
+  joint_state.position[5] = (float(msg.data[3]) * -0.00179193) - joint_state.position[4] / 3.0f;
   
   joint_state.name[6] ="gripper_left";
   joint_state.position[6] = msg.data[0];
+  
+  joint_state.name[7] ="gripper_right";
+  joint_state.position[7] = msg.data[0];
   
   is_state_to_publish = true;
 }
@@ -77,9 +80,10 @@ int main(int argc, char **argv)
 
   // message declarations
   geometry_msgs::TransformStamped odom_trans;
+  geometry_msgs::TransformStamped axis_trans;
   
   odom_trans.header.frame_id = "odom";
-  odom_trans.child_frame_id = "axis";
+  odom_trans.child_frame_id = "base_link";
 
 
     int count = 0;

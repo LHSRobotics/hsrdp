@@ -72,15 +72,15 @@ public:
       
       //w1=(r-p)/k
       temp[0] = (short) (
-                               (getPositionFromJointName("wrist_gripper_connection_pitch", j_n, point)
-                               - getPositionFromJointName("wrist_gripper_connection_roll", j_n, point))
+                               (getPositionFromJointName("wrist_gripper_connection_roll", j_n, point)
+                               - getPositionFromJointName("wrist_gripper_connection_pitch", j_n, point))
                                / 0.001294162
                                );
                                ROS_INFO("isActive() >>> %s", as_.isActive() ? "true" : "false");
       //w2=(-r-p)/k
       temp[1] = (short) (
-                               ((-getPositionFromJointName("wrist_gripper_connection_pitch", j_n, point))
-                               - getPositionFromJointName("wrist_gripper_connection_roll", j_n, point))
+                               (-(getPositionFromJointName("wrist_gripper_connection_roll", j_n, point))
+                               - getPositionFromJointName("wrist_gripper_connection_pitch", j_n, point))
                                / 0.001294162
                                );
 
@@ -93,8 +93,8 @@ public:
       /*THIS IS WRONG*/
       temp[2] = (short) (
                                 (getPositionFromJointName("wrist", j_n, point) 
-                                - (float)temp[3]) 
-                                / -0.00179193
+                                //- (float)temp[3] / 3.0f) 
+                                )/ -0.00179193
                                 );
       //shoulder_joint
       temp[4] = (short) (

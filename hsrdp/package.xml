@@ -17,6 +17,7 @@
   <run_depend>hsrdp_moveit</run_depend>
   <run_depend>hsrdp_action</run_depend>
   <run_depend>hsrdp_bridge</run_depend>
+  <run_depend>hsrdp_arm_motion</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

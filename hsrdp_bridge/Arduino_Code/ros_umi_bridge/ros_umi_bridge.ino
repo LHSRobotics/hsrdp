@@ -50,7 +50,7 @@ long publisher_timer;
 
 //The callback function that receives listens to new postition targets
 void targetsCb( const std_msgs::Int16MultiArray& target_msg){
-  targets[0] = last_gripper_target;
+  //targets[0] = last_gripper_target;
   targets[1] = target_msg.data[0];
   targets[2] = target_msg.data[1];
   targets[3] = target_msg.data[2];

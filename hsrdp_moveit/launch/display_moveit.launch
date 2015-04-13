@@ -1,13 +1,10 @@
 <launch>
-
-  <!-- By default, we do not start a database (it can be large) -->
   <arg name="db" default="false" />
 
   <arg name="debug" default="false" />
-
   
   <node name="serial_node" pkg="rosserial_python" type="serial_node.py" output="screen" >
-		<param name="~port" value="/dev/ttyACM6"/>
+		<param name="~port" value="/dev/ttyACM0"/>
 	</node>
 
   <include file="$(find hsrdp_moveit)/launch/planning_context.launch">
@@ -21,23 +18,25 @@
   
   <node name="umi_bridge" pkg="hsrdp_bridge" type="umi_bridge" />
   
-  <!--<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+  <!--
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="/use_gui" value="true"/>
-  </node>-->
-  
-  
+  </node>
+  -->
   
   <node name="trajectoryServer" ns="arm_controller" pkg="hsrdp_action" type="trajectoryServer" />
   
   <node name="gripperServer" ns="gripper_controller" pkg="hsrdp_action" type="gripperServer" />
   
-  <node name="move_group_interface_tutorial" pkg="hsrdp_moveit" type="move_group_interface_tutorial" />
+  <node name="arm_motion_node" pkg="hsrdp_arm_motion" type="hsrdp_arm_motion_node" />
   
   <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager"/>
-  
+  <!-- These ^^^,\/\/\/ are probably lalready started by planning ... need to check-->
   <rosparam file="$(find hsrdp_moveit)/config/controllers.yaml"/>
   
-  <!--<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />-->
+  <!--
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+  -->
 
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) :P-->
   <include file="$(find hsrdp_moveit)/launch/move_group.launch">
@@ -52,8 +51,4 @@
     <arg name="config" value="true"/>
     <arg name="debug" value="$(arg debug)"/>
   </include>
-
-  <!-- If database loading was enabled, start mongodb as well -->
-  <include file="$(find hsrdp_moveit)/launch/default_warehouse_db.launch" if="$(arg db)"/>
-
 </launch>

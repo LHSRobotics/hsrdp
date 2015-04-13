@@ -5,6 +5,8 @@
 #include <control_msgs/GripperCommandAction.h>
 #include <std_msgs/Int16.h>
 
+#include <math.h>
+
 
 class GripperCommandAction
 {
@@ -41,13 +43,21 @@ public:
 
     // = {layout: {dim: [], data_offset: 0}, data: [0, 0, 0, 0, 0, 0, -375]};
     
-    float pivot_to_tip;
+    //float pivot_to_tip;
     
-    int16_t temp = 0;
+    float sep = goal->command.position / 1000.f;
     
-    ROS_INFO("data = temp and publish to encoder_target [START]");
+    //0.0107x^2 + 58.4 x - sep = 0
+    
+    //(-58.4f +sqrt(pow(58.4f, 2) + 4.0f * 0.0107f * sep))/0.0214f
+    //10.7*10^-6*x^2 +0.0584x -sep = 0
+    
+    float tempF = 100000*(-0.0584f +sqrt(pow(0.0584f, 2) + 4.0f * 0.0000701f * sep))/0.0000214f;
+    int16_t temp = (int16_t)tempF;
+    
+    ROS_INFO("data = temp and publish to encoder_target [START] || dataF = %f", tempF);
     gripper_encoder_target.data = temp;
-    gripper_target_pub.publish(gripper_encoder_target);
+    //gripper_target_pub.publish(gripper_encoder_target);
                            
     ROS_INFO("isActive() >>> %s", as_.isActive() ? "true" : "false");
     ROS_INFO("Published!");
