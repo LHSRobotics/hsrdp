@@ -11,8 +11,8 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "move_group_interface_tutorial");
   ros::NodeHandle node_handle;  
-  ros::AsyncSpinner spinner(1);
-  spinner.start();
+  //spinner.start();
+  //ros::AsyncSpinner spinner(1);
 
   ROS_INFO("START move_group_interface_tutorial");
 

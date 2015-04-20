@@ -4,7 +4,7 @@
   <arg name="debug" default="false" />
   
   <node name="serial_node" pkg="rosserial_python" type="serial_node.py" output="screen" >
-		<param name="~port" value="/dev/ttyACM0"/>
+		<param name="~port" value="/dev/ttyACM2"/>
 	</node>
 
   <include file="$(find hsrdp_moveit)/launch/planning_context.launch">
@@ -28,7 +28,7 @@
   
   <node name="gripperServer" ns="gripper_controller" pkg="hsrdp_action" type="gripperServer" />
   
-  <node name="arm_motion_node" pkg="hsrdp_arm_motion" type="hsrdp_arm_motion_node" />
+<!--  <node name="arm_motion_node" pkg="hsrdp_arm_motion" type="hsrdp_arm_motion_node" /> -->
   
   <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager"/>
   <!-- These ^^^,\/\/\/ are probably lalready started by planning ... need to check-->

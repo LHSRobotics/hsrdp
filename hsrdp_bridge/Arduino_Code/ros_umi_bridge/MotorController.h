@@ -55,7 +55,7 @@ public:
            analogWrite(pin_a,abs(throttle));
            digitalWrite(pin_b, LOW);
          }else{ 
-          analogWrite(pin_b, throttle);
+          analogWrite(pin_b, abs(throttle));
           analogWrite(pin_a, 0);
          }
        }else{
