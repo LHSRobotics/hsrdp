@@ -101,10 +101,12 @@ int main(int argc, char **argv)
 //Motion 1--------------------------------------------------------------
   moveit::planning_interface::MoveGroup::Plan plan;
   group.setPoseTarget(pos0);
+  ROS_INFO("GOT to section A");
   ROS_INFO("Visualizing plan 1 (pose goal) %s",group.plan(plan)?"pos0":"FAILED");
   sleep(1);    
   group.move();
   sleep(3.5);
+  ROS_INFO("PAST section A");
   
   group.setPoseTarget(pos1);
   ROS_INFO("Visualizing plan 1 (pose goal) %s",group.plan(plan)?"pos1":"FAILED");
@@ -160,17 +162,18 @@ int main(int argc, char **argv)
   
 
 //Motion 2--------------------------------------------------------------
-  std::vector<double> group_gripper_variable_values;
+  /*std::vector<double> group_gripper_variable_values;
   group_gripper.getCurrentState()->copyJointGroupPositions(group_gripper.getCurrentState()->getRobotModel()->getJointModelGroup(group_gripper.getName()), group_gripper_variable_values);
   group_gripper_variable_values[0] = 0.01;
   group_gripper.setJointValueTarget(group_gripper_variable_values);
+  */
   
   moveit::planning_interface::MoveGroup::Plan plan_2;
 
   ROS_INFO("Visualizing plan 2 (joint target) %s",group_gripper.plan(plan_2)?"":"FAILED");    
   sleep(1.0);
 
-  //group_gripper.move();
+  group_gripper.move();
   sleep(3.0);
 //----------------------------------------------------------------------
 

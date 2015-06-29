@@ -22,14 +22,36 @@ public:
     // constructor : sets PWM pins as outputs, 
     // 3rd param changes the second pin to a direction pin, so that the PWM is only used on the first param pin
 
-    MotorController( int8_t PinA, int8_t PinB, boolean one_pwm = false) : pin_a ( PinA), pin_b( PinB ) {
+    MotorController( int8_t PinA, int8_t PinB) : pin_a ( PinA), pin_b( PinB ) {
+        // set pin a and b to be output 
+        pinMode(pin_a, OUTPUT); 
+        pinMode(pin_b, OUTPUT); 
+        one_pwm_type = false;
+    };
+    
+
+    MotorController( int8_t PinA, int8_t PinB, boolean one_pwm) : pin_a ( PinA), pin_b( PinB ) {
         // set pin a and b to be output 
         pinMode(pin_a, OUTPUT); 
         pinMode(pin_b, OUTPUT); 
         one_pwm_type = one_pwm;
     };
+    
+    MotorController( int8_t PinA, int8_t PinB, int8_t enable_pin, boolean one_pwm) : pin_a ( PinA), pin_b( PinB ) {
+        one_pwm_type = one_pwm;
+        pin_enable = enable_pin;
+        // set pin a and b to be output 
+        pinMode(pin_a, OUTPUT); 
+        pinMode(pin_b, OUTPUT);
+        pinMode(pin_enable, OUTPUT);
+        digitalWrite(pin_enable, HIGH);
 
- 
+    };
+
+
+    void enable () { return throttle; };
+    void disable () { return throttle; };
+    boolean isEnabled () return ()
     // returns current throttle level
 
     int getThrottle () { return throttle; };
@@ -73,7 +95,10 @@ private:
 
     int8_t pin_b;
     
+    int8_t pin_enable= -1;
+    
     boolean one_pwm_type;
+    
 };
 
 #endif // __MOTORCONTROLLER_H__
