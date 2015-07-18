@@ -1,11 +1,12 @@
 <launch>
-  <arg name="db" default="false" />
+  <arg default="false" name="db"/>
+  <arg default="false" name="debug"/>
+<!-- rosparam set enable_statistics true -->
+  <param name="enable_statistics" type="bool" value="true"/>
 
-  <arg name="debug" default="false" />
-  
-  <node name="serial_node" pkg="rosserial_python" type="serial_node.py" output="screen" >
-		<param name="~port" value="/dev/ttyACM0"/>
-	</node>
+  <node name="serial_node" output="screen" pkg="rosserial_python" type="serial_node.py">
+    <param name="~port" value="/dev/ttyACM0"/>
+  </node>
 
   <include file="$(find hsrdp_moveit)/launch/planning_context.launch">
     <arg name="load_robot_description" value="true"/>
@@ -14,39 +15,35 @@
   <rosparam command="load" file="$(find hsrdp_moveit)/config/joint_names.yaml"/>
 
   <param name="robot_description" textfile="$(find hsrdp_bridge)/umi_rtx_100.urdf"/>
-  
-  
-  <node name="umi_bridge" pkg="hsrdp_bridge" type="umi_bridge" />
-  
-  <!--
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+
+  <node name="umi_bridge" pkg="hsrdp_bridge" type="umi_bridge"/>
+
+<!-- ======= -->
+<!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="/use_gui" value="true"/>
-  </node>
-  -->
-  
-  <node name="trajectoryServer" ns="arm_controller" pkg="hsrdp_action" type="trajectoryServer" />
-  
-  <node name="gripperServer" ns="gripper_controller" pkg="hsrdp_action" type="gripperServer" />
-  
-<!--  <node name="arm_motion_node" pkg="hsrdp_arm_motion" type="hsrdp_arm_motion_node" /> -->
-  
+  </node> -->
+
+  <node name="trajectoryServer" ns="arm_controller" pkg="hsrdp_action" type="trajectoryServer"/>
+
+  <node name="gripperServer" ns="gripper_controller" pkg="hsrdp_action" type="gripperServer"/>
+
+  <node name="arm_motion_node" pkg="hsrdp_motion" type="hsrdp_arm_motion_node"/>
+  <node name="gripper_motion_node" pkg="hsrdp_motion" type="hsrdp_gripper_motion_node"/>
+
   <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager"/>
-  <!-- These ^^^,\/\/\/ are probably lalready started by planning ... need to check-->
+<!-- These ^^^,\/\/\/ are probably already started by planning ... need to check-->
   <rosparam file="$(find hsrdp_moveit)/config/controllers.yaml"/>
-  
-  <!--
+<!--
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
   -->
-
-  <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) :P-->
+<!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) :P-->
   <include file="$(find hsrdp_moveit)/launch/move_group.launch">
-    <arg name="allow_trajectory_execution" value="true"/>  
+    <arg name="allow_trajectory_execution" value="true"/>
     <arg name="fake_execution" value="false"/>
     <arg name="info" value="true"/>
     <arg name="debug" value="$(arg debug)"/>
   </include>
-
-  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+<!-- Run Rviz and load the default config to see the state of the move_group node -->
   <include file="$(find hsrdp_moveit)/launch/moveit_rviz.launch">
     <arg name="config" value="true"/>
     <arg name="debug" value="$(arg debug)"/>

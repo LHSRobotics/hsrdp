@@ -6,8 +6,8 @@ Panels:
       Expanded:
         - /MotionPlanning1
         - /MotionPlanning1/Scene Robot1
-      Splitter Ratio: 0.74256
-    Tree Height: 524
+      Splitter Ratio: 0.540212
+    Tree Height: 346
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -38,7 +38,9 @@ Visualization Manager:
       Value: true
     - Class: moveit_rviz_plugin/MotionPlanning
       Enabled: true
+      Move Group Namespace: ""
       MoveIt_Goal_Tolerance: 0
+      MoveIt_Planning_Attempts: 10
       MoveIt_Planning_Time: 5
       MoveIt_Use_Constraint_Aware_IK: true
       MoveIt_Warehouse_Host: 127.0.0.1
@@ -193,8 +195,8 @@ Visualization Manager:
             Show Trail: false
             Value: true
         Robot Alpha: 0.5
-        Show Robot Collision: false
-        Show Robot Visual: false
+        Show Robot Collision: true
+        Show Robot Visual: true
       Value: true
   Enabled: true
   Global Options:
@@ -231,16 +233,16 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1219
+  Height: 1027
   Help:
     collapsed: false
   Hide Left Dock: false
   Hide Right Dock: false
   Motion Planning:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002a20000047dfc0200000005fb000000100044006900730070006c0061007900730100000028000002a1000000dd00fffffffb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006701000002cf000001d60000017400fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000000002360000047d00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd000000010000000000000295000003b9fc0200000005fb000000100044006900730070006c0061007900730100000028000001f3000000d500fffffffb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000221000001c0000001b500fffffffb0000000800480065006c00700000000342000000bb0000007400fffffffb0000000a0056006900650077007300000003b0000000b0000000ae00fffffffb0000000c00430061006d00650072006100000002ff00000161000000000000000000000248000003b900000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 1246
-  X: 623
+  Width: 1251
+  X: 657
   Y: 14
