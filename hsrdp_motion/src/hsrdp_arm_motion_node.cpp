@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 
   ROS_INFO("START hsrdp_arm_motion_node");
 
-  sleep(5.0);
+  sleep(10.0);
 
   moveit::planning_interface::MoveGroup group("main_group");
 
