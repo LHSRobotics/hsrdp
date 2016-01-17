@@ -49,11 +49,18 @@ public:
     };
 
 
-    void enable () { return throttle; };
-    void disable () { return throttle; };
-    boolean isEnabled () return ()
+    void enable () {
+      ///stub only, h-drive enable lines not yet used
+    };
+    void disable () {
+      ///stub only, h-drive enable lines not yet used
+    };
+    boolean isEnabled () {
+      ///stub only, h-drive enable lines not yet used
+      return true;
+    }
+    
     // returns current throttle level
-
     int getThrottle () { return throttle; };
 
     // set the position value

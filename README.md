@@ -30,10 +30,14 @@ Then connect the arduino to the USB port and run
 ```rosrun rosserial_python serial_node.py /dev/ttyACM0``` changing the last parammeter depending on which TTY port your aruduno serial is connected to.
 It should show something like:
 
-	[INFO] [WallTime: 1371999847.133541] ROS Serial Python Node
-	[INFO] [WallTime: 1371999847.149722] Connecting to /dev/ttyACM0 at 57600 baud
-	[INFO] [WallTime: 1371999850.217666] Note: publish buffer size is 280 bytes
-	[INFO] [WallTime: 1371999850.218283] Setup publisher on arm_encoders [std_msgs/Int16MultiArray]
+	[INFO] [WallTime: 1453047127.723874] ROS Serial Python Node
+	[INFO] [WallTime: 1453047127.733935] Connecting to /dev/ttyACM3 at 57600 baud
+	[INFO] [WallTime: 1453047130.150050] Note: publish buffer size is 512 bytes
+	[INFO] [WallTime: 1453047130.150891] Setup publisher on arm_encoders [std_msgs/Int16MultiArray]
+	[INFO] [WallTime: 1453047130.157397] Note: subscribe buffer size is 512 bytes
+	[INFO] [WallTime: 1453047130.157971] Setup subscriber on arm_controller/arm_encoder_targets [std_msgs/Int16MultiArray]
+	[INFO] [WallTime: 1453047130.162863] Setup subscriber on gripper_controller/gripper_encoder_target [std_msgs/Int16]
+
 If instead you are getting out of sync errors then this try running the serial monitor on the port in the Arduino IDE, TODO still need to find out why this happens
 If you are getting failed packet headers then it's most likely due to an arduino/ros version mismatch so make sure the right version of rosserial_python is installed and sourced.
 
@@ -46,7 +50,7 @@ This will plot the raw encoder values onto a plot at 5Hz by default, you can als
 
 To tell the arduino the target positons of encoders on the commandline you can use the following:
 
-	rostopic pub arm_encoder_targets std_msgs/Int16MultiArray '{layout: {dim: [], data_offset: 0}, data: [0, 0, 0, 0, 0, 0, -375]}'
+	rostopic pub /arm_controller/arm_encoder_targets std_msgs/Int16MultiArray '{layout: {dim: [], data_offset: 0}, data: [0, 0, 0, 0, 0, -375]}'
 
 Or alternatively moving specific joints (the rest default to their init value) using roslaunch, with j1 being the up/down joint and j7 being the gripper
 	
