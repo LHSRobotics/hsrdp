@@ -1,0 +1,7 @@
+<launch>
+  <include file="$(find hsrdp_launch)/launch/rviz.launch"/>
+
+  <node name="arm_motion_node" pkg="hsrdp_motion" type="hsrdp_arm_motion_node"/>
+
+  <node name="gripper_motion_node" pkg="hsrdp_motion" type="hsrdp_gripper_motion_node"/>
+</launch>

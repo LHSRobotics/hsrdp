@@ -1,7 +1,7 @@
 #include <ros/ros.h>
 
 #include <actionlib/server/simple_action_server.h>
-#include "hsrdp_action/PublishNextWaypoint.h"
+#include "hsrdp_action/publish_next_waypoint.h"
 
 #include <control_msgs/FollowJointTrajectoryAction.h>
 #include <trajectory_msgs/JointTrajectoryPoint.h>
@@ -25,11 +25,11 @@ protected:
   control_msgs::FollowJointTrajectoryResult   result_;
   std_msgs::Int16MultiArray encoder_targets;
   ros::Publisher arm_targets_pub;
-  ros::ServiceServer NextWaypointService;
+  ros::ServiceServer next_waypoint_serv;
 
   // std::vector<trajectory_msgs::JointTrajectoryPoint> JointTrajectoryBuffer;
   std::queue<trajectory_msgs::JointTrajectoryPoint> JointTrajectoryBuffer;
-  std::vector<std::string> j_n;
+  std::vector<std::string> joint_names;
 
 public:
 
@@ -45,9 +45,9 @@ public:
       "arm_encoder_targets",
       1000);
 
-    NextWaypointService = nh_.advertiseService("PublishNextWaypoint",
-                                               &FollowJointTrajectoryAction::positionPublish,
-                                               this);
+    next_waypoint_serv = nh_.advertiseService("publish_next_waypoint",
+                                              &FollowJointTrajectoryAction::positionPublish,
+                                              this);
   }
 
   ~FollowJointTrajectoryAction(void)
@@ -73,8 +73,8 @@ public:
   }
 
   // Publish on messages for position control
-  bool positionPublish(hsrdp_action::PublishNextWaypoint::Request & req,
-                       hsrdp_action::PublishNextWaypoint::Response& res)
+  bool positionPublish(hsrdp_action::publish_next_waypoint::Request & req,
+                       hsrdp_action::publish_next_waypoint::Response& res)
   {
     if (JointTrajectoryBuffer.size() > 0) {
       trajectory_msgs::JointTrajectoryPoint currentPoint =
@@ -87,50 +87,48 @@ public:
 
       // w1=(r-p)/k
       temp[0] = (short)(
-        (getPositionFromJointName("wrist_gripper_connection_roll", j_n,
-                                  currentPoint)
-         - getPositionFromJointName("wrist_gripper_connection_pitch", j_n,
-                                    currentPoint))
+        (getPositionFromJointName("wrist_gripper_connection_roll", joint_names,  currentPoint)
+         - getPositionFromJointName("wrist_gripper_connection_pitch", joint_names, currentPoint))
         / 0.001294162
         );
 
       // w2=(-r-p)/k
       temp[1] = (short)(
-        (-(getPositionFromJointName("wrist_gripper_connection_roll", j_n,
-                                    currentPoint))
-         - getPositionFromJointName("wrist_gripper_connection_pitch", j_n,
-                                    currentPoint))
+        (-(getPositionFromJointName("wrist_gripper_connection_roll", joint_names, currentPoint))
+         - getPositionFromJointName("wrist_gripper_connection_pitch", joint_names, currentPoint))
         / 0.001294162
         );
 
       // elbow
       temp[3] = (short)(
-        (getPositionFromJointName("elbow", j_n, currentPoint) / 0.001194503)
+        (getPositionFromJointName("elbow", joint_names, currentPoint)
+         / 0.001194503)
         );
 
       // wrist
       // THIS IS PROBABLY WRONG
       temp[2] = (short)(
-        (getPositionFromJointName("wrist", j_n, currentPoint) / -0.00179193)
+        (getPositionFromJointName("wrist", joint_names, currentPoint)
+         / -0.00179193)
         );
 
       // shoulder_joint
       temp[4] = (short)(
-        (getPositionFromJointName("shoulder_joint", j_n,
-                                  currentPoint) / -0.000597252)
+        (getPositionFromJointName("shoulder_joint", joint_names, currentPoint)
+         / -0.000597252)
         );
 
       // shoulder_updown
       temp[5] = (short)(
-        (getPositionFromJointName("shoulder_updown", j_n,
-                                  currentPoint) / -0.0002667)
+        (getPositionFromJointName("shoulder_updown", joint_names, currentPoint)
+         / -0.0002667)
         );
 
       encoder_targets.data = temp;
       arm_targets_pub.publish(encoder_targets);
       ROS_INFO("Published!");
     }
-    res.WaypointsRemaining = JointTrajectoryBuffer.size();
+    res.remaining_waypoint_count = JointTrajectoryBuffer.size();
     return true;
   }
 
@@ -141,7 +139,7 @@ public:
 
     // bool success = true;
 
-    j_n = goal->trajectory.joint_names;
+    joint_names = goal->trajectory.joint_names;
 
     // size_t size                  = 6;
     // std::vector<short> temp(size);
@@ -211,8 +209,8 @@ public:
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "trajectoryServer");
-  FollowJointTrajectoryAction trajectoryServer(ros::this_node::getName());
+  ros::init(argc, argv, "trajectory_server");
+  FollowJointTrajectoryAction trajectory_server(ros::this_node::getName());
 
 
   ROS_INFO("MAIN RUN");

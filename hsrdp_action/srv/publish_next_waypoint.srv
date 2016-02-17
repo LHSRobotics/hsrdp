@@ -1,0 +1,3 @@
+std_msgs/Empty EmptyMsg
+---
+int16 remaining_waypoint_count

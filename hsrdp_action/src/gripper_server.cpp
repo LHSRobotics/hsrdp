@@ -11,10 +11,12 @@ class GripperCommandAction {
 protected:
 
   ros::NodeHandle nh_;
+
   // NodeHandle instance must be created before this line. Otherwise strange
   // error may occur.
   actionlib::SimpleActionServer<control_msgs::GripperCommandAction> as_;
   std::string action_name_;
+
   // create messages that are used to published feedback/result
   control_msgs::GripperCommandFeedback feedback_;
   control_msgs::GripperCommandResult   result_;
@@ -24,13 +26,11 @@ protected:
 public:
 
   GripperCommandAction(std::string name) :
-    as_(nh_, name, boost::bind(&GripperCommandAction::executeCB, this, _1),
-        false),
+    as_(nh_, name, boost::bind(&GripperCommandAction::executeCB, this, _1), false),
     action_name_(name)
   {
     as_.start();
-    gripper_target_pub = nh_.advertise<std_msgs::Int16>("gripper_encoder_target",
-                                                        1000);
+    gripper_target_pub = nh_.advertise<std_msgs::Int16>("gripper_encoder_target", 1000);
   }
 
   ~GripperCommandAction(void)
@@ -57,8 +57,7 @@ public:
                    sqrt(pow(0.0584f, 2) + 4.0f * 0.0000701f * sep)) / 0.0000214f;
     int16_t temp = (int16_t)tempF;
 
-    ROS_INFO("data = temp and publish to encoder_target [START] || dataF = %f",
-             tempF);
+    ROS_INFO("data = temp and publish to encoder_target [START] || dataF = %f", tempF);
     gripper_encoder_target.data = temp;
 
     gripper_target_pub.publish(gripper_encoder_target);
@@ -75,13 +74,12 @@ public:
   }
 };
 
-
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "gripperServer");
-  GripperCommandAction gripperServer(ros::this_node::getName());
+  ros::init(argc, argv, "gripper_server");
+  GripperCommandAction gripper_server(ros::this_node::getName());
 
-  ROS_INFO("gripperServer RUN");
+  ROS_INFO("gripper_server RUN");
   ros::spin();
 
   return 0;

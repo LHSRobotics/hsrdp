@@ -25,11 +25,10 @@ int main(int argc, char **argv)
 
   moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
 
-  ros::Publisher display_publisher =
-    node_handle.advertise<moveit_msgs::DisplayTrajectory>(
-      "/move_group/display_planned_path",
-      1,
-      true);
+  ros::Publisher display_publisher = node_handle.advertise<moveit_msgs::DisplayTrajectory>(
+    "/move_group/display_planned_path",
+    1,
+    true);
   moveit_msgs::DisplayTrajectory display_trajectory;
 
   ROS_INFO("Active joints (main_group): %s, %s, %s, %s, %s, %s",
@@ -98,20 +97,22 @@ int main(int argc, char **argv)
   ROS_INFO("fin waypoints");
   moveit_msgs::RobotTrajectory trajectory;
   double proportion_acheived = group.computeCartesianPath(waypoints,
-                                               0.01, // eef_step
-                                               0.0,  // jump_threshold
-                                               trajectory,
-                                               true);//colision_Avoid
+                                                          0.01,  // eef_step
+                                                          0.0,   // jump_threshold
+                                                          trajectory,
+                                                          true); // colision_Avoid
 
   ROS_INFO("Visualizing plan (cartesian path) (%.2f%% acheived)",
            proportion_acheived * 100.0);
 
   /* Sleep to give Rviz time to visualize the plan. */
+
   // sleep(15.0);
   // ROS_INFO("fin sleep 15.0");
   moveit::planning_interface::MoveGroup::Plan plan;
   plan.trajectory_ = trajectory;
   group.asyncExecute(plan);
+
   // Motion 1--------------------------------------------------------------
   // moveit::planning_interface::MoveGroup::Plan plan;
   // group.setPoseTarget(pos0);

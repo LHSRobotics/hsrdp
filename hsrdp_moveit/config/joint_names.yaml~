@@ -1,6 +1,6 @@
 controller_list:
   - name: ""
-    action_ns: trajectoryServer
+    action_ns: trajectory_server
     type: FollowJointTrajectory
     default: true
     joints:

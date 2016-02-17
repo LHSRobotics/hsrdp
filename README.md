@@ -1,5 +1,6 @@
 HSRDP
 =====
+(Needs updating to refer to refer to launch files etc.)
 
 HackSpace Robotics Development Platform
 http://wiki.london.hackspace.org.uk/view/Project:HSRDP
@@ -16,7 +17,7 @@ Assuming you've installed ROS following the guidelines on the website linked abo
 URDF visualisation
 ------------------
 
-Once installed pull the repository into your catkin workspace (e.g. ```~/catkin_ws/src/umi_rtx_100/src```) then 
+Once installed pull the repository into your catkin workspace (e.g. ```~/catkin_ws/src/umi_rtx_100/src```) then
 run with
 ```roslaunch simulate.launch model:=umi_rtx_100.urdf gui:=true```
 
@@ -53,5 +54,5 @@ To tell the arduino the target positons of encoders on the commandline you can u
 	rostopic pub /arm_controller/arm_encoder_targets std_msgs/Int16MultiArray '{layout: {dim: [], data_offset: 0}, data: [0, 0, 0, 0, 0, -375]}'
 
 Or alternatively moving specific joints (the rest default to their init value) using roslaunch, with j1 being the up/down joint and j7 being the gripper
-	
+
 	roslaunch move.launch j1:=1000

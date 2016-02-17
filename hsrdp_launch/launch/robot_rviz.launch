@@ -1,0 +1,12 @@
+<launch>
+  <arg default="false" name="debug"/>
+  <include file="$(find hsrdp_launch)/launch/robot.launch">
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find hsrdp_moveit)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+</launch>

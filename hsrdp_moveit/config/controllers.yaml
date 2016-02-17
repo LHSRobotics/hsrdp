@@ -1,6 +1,6 @@
 controller_list:
   - name: "arm_controller"
-    action_ns: trajectoryServer
+    action_ns: trajectory_server
     type: FollowJointTrajectory
     default: true
     joints:
@@ -11,7 +11,7 @@ controller_list:
       - wrist_gripper_connection_roll
       - wrist_gripper_connection_pitch
   - name: "gripper_controller"
-    action_ns: gripperServer
+    action_ns: gripper_server
     type: GripperCommand
     default: true
     joints:
